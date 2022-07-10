@@ -1,3 +1,5 @@
 Sort dev dependencies:
-- Babel?
+- Babel
 - Linter
+- Lerna
+- Webpack
