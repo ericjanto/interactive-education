@@ -1,2 +1,3 @@
 - Backend: API routing
+  - see nextjs documentation
 - Frontend: reviewing platform
