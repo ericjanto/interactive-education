@@ -1,5 +1,3 @@
-Sort dev dependencies:
-- Babel
-- Linter
-- Lerna
-- Webpack
+# Interactive Education
+
+This repository contains the code for my dissertation project.

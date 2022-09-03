@@ -1,1 +1,0 @@
-Educative modules are imported into IICs, i.e. web components. Importing will most likely happen via an `<iframe>`.
