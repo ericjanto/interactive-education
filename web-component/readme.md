@@ -1,4 +1,4 @@
-# Video Component
+# Video Component Roadmap
 
 - [x] Add interactive element component
 - [x] Bundle javascript using webpack + set up in index.html
@@ -9,11 +9,14 @@
 - [x] Make fields private
 - [ ] Time conversion from "time" attribute
 - [ ] At specified time, video is stopped and an element is shown
-- [ ] The element shown is an iframe (with random url)ss
-- [ ] Refactor heavily
+- [ ] The element shown is an iframe (with random url)
+- [ ] Add error handling
+- [ ] Refactor *heavily*
+- [ ] Extend functionality
 - [ ] Documentation via JSDoc
+- [ ] Testing with jest
 
-## Scripts
+## Setup
 
 * Node version: >= 14.17.5
 * `yarn run dev`: formats code, styleguide hints, and serves dev server
