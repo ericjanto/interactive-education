@@ -1,0 +1,32 @@
+{
+  "name": "web-component",
+  "version": "1.0.0",
+  "main": "./src/index.js",
+  "scripts": {
+    "dev": "yarn run prettify && yarn run lint && cross-env NODE_ENV=development webpack serve --config config/webpack.dev.cjs",
+    "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.cjs",
+    "lint": "eslint 'src/*.js' || true",
+    "prettify": "prettier --write 'src/*.js'"
+  },
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.19.1",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.19.1",
+    "babel-loader": "^8.2.5",
+    "babel-plugin-add-import-extension": "^1.6.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-webpack": "^0.13.2",
+    "eslint-plugin-prettier": "^4.2.1",
+    "html-webpack-plugin": "^5.5.0",
+    "prettier": "^2.7.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1",
+    "webpack-merge": "^5.8.0"
+  }
+}
