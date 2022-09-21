@@ -6,17 +6,11 @@
 - [x] Webpack to compile JavaScript to be as compatible as possible
 - [x] Set up webpack server
 - [x] Improve webpack setup with linters and prettier etc. Tutorial: https://github.com/taniarascia/webpack-boilerplate
-- [ ] Find better way to define getters / object attributes for interactive element
-
-    ```js
-    const expr = 'foo';
-
-    const obj = {
-    get [expr]() { return 'bar'; }
-    };
-
-    console.log(obj.foo); // "bar"
-    ```
+- [x] Make fields private
+- [ ] Time conversion from "time" attribute
+- [ ] At specified time, video is stopped and an element is shown
+- [ ] The element shown is an iframe (with random url)ss
+- [ ] Refactor heavily
 - [ ] Documentation via JSDoc
 
 ## Scripts

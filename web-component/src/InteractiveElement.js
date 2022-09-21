@@ -1,14 +1,12 @@
 export class InteractiveElement extends HTMLElement {
-  constructor() {
-    super()
+  // TODO: check that valid attributes have valid values
 
-    // Purpose: provide encapsulation of attribute values
-    // and offer them to other objects through getters
-
-    const validAttributeNames = ['type', 'id', 'time']
+  get time() {
+    return this.getAttribute('time')
   }
 
-  get type() {
-    return this.getAttribute('type')
+  get content() {
+    // Here, make an API call to retrieve content in JSON format
+    return 'dummycontent'
   }
 }
