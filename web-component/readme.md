@@ -11,7 +11,6 @@
 - [x] At specified time, video is stopped
 - [x] Show an element at specific time (attach shadow root)
 - [x] The element shown is an iframe (with random url)
-- [ ] Refactor *heavily*
 - [ ] Overlay iframe on top of video:
     * https://stackoverflow.com/questions/16234740/overlay-on-html5-fullscreen-video
     * https://stackoverflow.com/questions/45798213/firefox-fullscreen-video-append-dom-elements?noredirect=1&lq=1
