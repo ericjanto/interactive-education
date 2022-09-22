@@ -1,12 +1,12 @@
 export class InteractiveElement extends HTMLElement {
-  // TODO: check that valid attributes have valid values
+    // TODO: check that valid attributes have valid values
 
-  get time() {
-    return this.getAttribute('time')
-  }
+    get timestamp() {
+        return this.getAttribute('timestamp')
+    }
 
-  get content() {
-    // Here, make an API call to retrieve content in JSON format
-    return 'dummycontent'
-  }
+    get content() {
+        // Here, make an API call to retrieve content in JSON format
+        return 'dummycontent'
+    }
 }
