@@ -22,17 +22,18 @@ export class InteractiveVideo extends HTMLElement {
         iframe.style.border = 'none'
         iframe.style.width = '100%'
         iframe.setAttribute('loading', 'eager')
-        iframe.setAttribute(
-            'sandbox',
-            'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-modals'
-        )
+        // iframe.setAttribute(
+        //     'sandbox',
+        //     'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-modals'
+        // )
         shadowRoot.appendChild(iframe)
 
         video.ontimeupdate = function () {
             var now = Math.floor(this.currentTime).toString()
             if (times.includes(now)) {
                 video.pause()
-                iframe.src = 'https://www.ericjanto.com'
+                const promptID = interactiveElements[now].id
+                iframe.src = `http://localhost:3000/flashcard/${promptID}`
                 // renderInteractiveElement(parent, times[now])
                 times.splice(times.indexOf(now), 1)
             }

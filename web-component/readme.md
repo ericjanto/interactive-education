@@ -27,6 +27,10 @@
 * `yarn run dev`: formats code, styleguide hints, and serves dev server
 * `yarn run build`: creates production bundle of web component in `/dist`, along with an example html page
 
+## Functionality
+
+* `/flashcard/[promptID]` displays flashcard for corresponding prompt ID
+* `/prompts/[promptID]` is the REST API endpoint for retrieving the prompt data
 
 ## Dev Tools
 I utilise a number of developer tools which are standards for web development these days. Their main functionality:
