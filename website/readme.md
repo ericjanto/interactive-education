@@ -6,8 +6,16 @@
 
 ## Roadmap
 
-- [ ] Create API endpoint
-  - [ ] Make connection to DB
-  - [ ] Fetch dummy row and show contents
-  - [ ] Create flexible api endpoint accepting any string for ID
-  - [ ] front/back functionality
+- [x] Make connection to DB
+- [x] Create API endpoint
+  - [x] Fetch dummy row and show contents
+  - [x] Create flexible api endpoint accepting any string for ID
+- [x] Front/back functionality
+  - [x] SWR for client-side data fetching
+  - [x] Flash card component
+  - [x] Extend flash card component UI (radix tabs for now)
+- [ ] Refactor
+- [ ] Credentials from ENV file
+
+
+- [ ] Admin / User functionality (for now all actions are performed by an admin)
