@@ -19,9 +19,10 @@
   - [x] Research pocketbase authentication
   - [x] Research nextjs authentication
   - [x] Provide frontend for registration & login
-  - [ ] Create API endpoints for registering a user with the database
-  - [ ] Create API endpoints for login to the database with user data
-  - [ ] Create user-specific table/rows
+  - [x] Figure out what information is available from Auth0 usr -> sub / sid
+  - [ ] Create restricted API endpoint for saving user data in database
+  - [ ] Create restricted API endpoint for retrieving user data
+  - [ ] Create review page skeleton where user data is retrieved
   - [ ] Detect from web-component (i.e. iframe) whether user logged in
   - [ ] Registration / login from component
 - [ ] Refactor
