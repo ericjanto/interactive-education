@@ -23,6 +23,8 @@
 
 ## Setup
 
+yarn install
+
 * Node version: >= 14.17.5
 * `yarn run dev`: formats code, styleguide hints, and serves dev server
 * `yarn run build`: creates production bundle of web component in `/dist`, along with an example html page

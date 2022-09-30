@@ -29,6 +29,9 @@
   - [ ] Improve JSON fetching: https://github.com/vercel/next.js/blob/canary/examples/with-iron-session/lib/fetchJson.ts
 
 ## Setup
+```
+yarn install
+```
 * node version
 * nextjs version
 * .env.local setup
