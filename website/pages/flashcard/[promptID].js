@@ -23,6 +23,8 @@ export default function Prompt() {
   if (!data) return <div>Loading...</div>
 
   return (
-    <Flashcard front={data.question} back={data.answer}></Flashcard>
+    <>
+      <Flashcard front={data.question} back={data.answer}></Flashcard>
+    </>
   )
 }

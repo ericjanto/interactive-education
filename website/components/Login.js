@@ -1,7 +1,6 @@
 import { useUser } from '@auth0/nextjs-auth0'
-import Link from 'next/link'
 
-export default function Login() {
+export function Login() {
     const { user, error, isLoading } = useUser()
 
     if (isLoading) return <div>Loading...</div>
@@ -15,12 +14,12 @@ export default function Login() {
                     <br />
                     User id: {user.sub}
                     <br />
-                    <Link href='/api/auth/logout'>Logout</Link>
+                    <a target='_blank' href='/api/auth/logout'>Logout</a>
                 </p>
             )
                 : (
                     <p>
-                        <Link href='api/auth/login'>Login</Link>
+                        <a target='_blank' href='/api/auth/login'>Login</a>
                     </p>
                 )}
         </>
