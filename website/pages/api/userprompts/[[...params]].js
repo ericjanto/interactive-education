@@ -1,0 +1,59 @@
+import { createUserPromptReview, fetchPrompt, fetchUserPromptsReviews, fetchUserSpecificPromptReviews } from "../../../utils/pocketbase"
+import { daysBetweenDates, getNormalisedUserID } from "../../../utils/lib"
+import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0"
+import { leitnerSchedule } from "../../../utils/scheduler";
+
+function handler(req, res) {
+    const {
+        method,
+        body,
+    } = req
+
+    const { user } = getSession(req, res);
+    const normUserID = getNormalisedUserID(user.sub)
+
+    switch (method) {
+        case 'GET':
+            const dbRes = fetchUserPromptsReviews(normUserID)
+            dbRes.then(
+                (result) => {
+                    res.status(200).json(result)
+                },
+                (error) => {
+                    res.status(404).json(`No data found for user with ID ${normUserID}. ${error}`)
+                })
+            break
+        case 'POST':
+            const promptID = body.promptID
+            const remembered = body.remembered
+            if (fetchPrompt(promptID)) {
+                fetchUserSpecificPromptReviews(normUserID, promptID).then(
+                    (result) => {
+                        if (result.totalItems >= 1) {
+                            const due_date = new Date(result.items.at(0).calculated_next_due)
+                            const now = new Date()
+                            const daydiff = daysBetweenDates(now, due_date)
+                            if (daydiff > 0) {
+                                res.status(404).json(`Did not send feedback since review date is scheduled in future: ${due_date}`)
+                            }
+                        } else {
+                            const nextDueDate = leitnerSchedule(result)
+                            createUserPromptReview(normUserID, promptID, remembered, nextDueDate)
+                            res.status(200).json(`Created prompt review record with user id ${normUserID} and prompt id ${promptID}. Next due date: ${nextDueDate}`)
+                        }
+                    },
+                    (error) => {
+                        res.status(404).json(`No data found for user with ID ${normUserID}. ${error}`)
+                    })
+                break
+            } else {
+                res.status(404).json(`An error occured when trying to write a prompt review record.`)
+            }
+            break
+        default:
+            res.setHeader('Allow', ['GET', 'POST'])
+            res.status(405).end(`Method ${method} not allowed`)
+    }
+}
+
+export default withApiAuthRequired(handler)

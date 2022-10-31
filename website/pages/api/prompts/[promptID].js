@@ -1,19 +1,5 @@
 import { fetchPrompt } from "../../../utils/pocketbase"
 
-// import PocketBase from 'pocketbase'
-
-// async function fetchPrompt(promptID) {
-//     const client = new PocketBase('http://127.0.0.1:8090')
-//     const adminAuthData = await client.admins.authViaEmail('s1975761@ed.ac.uk', 'interactiveVideos')
-//     try {
-//         return client.records.getOne('prompts', promptID, {
-//         })
-//     } catch (error) {
-//         console.log(error)
-//         return null
-//     }
-// }
-
 export default function handler(req, res) {
     const {
         query: { promptID },

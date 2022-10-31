@@ -1,4 +1,6 @@
+import { Feedback } from '../../components/Feedback'
 import { Flashcard } from '../../components/Flashcard'
+import { Login } from '../../components/Login'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 
@@ -24,7 +26,9 @@ export default function Prompt() {
 
   return (
     <>
+      <Login></Login>
       <Flashcard front={data.question} back={data.answer}></Flashcard>
+      <Feedback promptID={query.promptID}></Feedback>
     </>
   )
 }
