@@ -1,6 +1,7 @@
-import { createUserPromptReview, fetchPrompt, fetchUserPromptsReviews, fetchUserSpecificPromptReviews } from "../../../utils/pocketbase"
-import { daysBetweenDates, getNormalisedUserID } from "../../../utils/lib"
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0"
+
+import { createUserPromptReview, fetchPrompt, fetchUserPromptsReviews, fetchUserSpecificPromptReviews } from "../../../utils/pocketbase"
+import { addDays, daysBetweenDates, getNormalisedUserID } from "../../../utils/lib"
 import { leitnerSchedule } from "../../../utils/scheduler";
 
 function handler(req, res) {
@@ -29,15 +30,23 @@ function handler(req, res) {
             if (fetchPrompt(promptID)) {
                 fetchUserSpecificPromptReviews(normUserID, promptID).then(
                     (result) => {
+                        var sendFeedback = true
                         if (result.totalItems >= 1) {
                             const due_date = new Date(result.items.at(0).calculated_next_due)
                             const now = new Date()
                             const daydiff = daysBetweenDates(now, due_date)
                             if (daydiff > 0) {
-                                res.status(404).json(`Did not send feedback since review date is scheduled in future: ${due_date}`)
+                                sendFeedback = false
+                                res.status(409).json(`Did not send feedback since review date is scheduled in future: ${due_date}`)
                             }
-                        } else {
-                            const nextDueDate = leitnerSchedule(result)
+                        } 
+                        if (sendFeedback) {
+                            var nextDueDate = null
+                            if (remembered) {
+                                nextDueDate = leitnerSchedule(result)
+                            } else {
+                                nextDueDate = addDays(new Date(), 1)
+                            }
                             createUserPromptReview(normUserID, promptID, remembered, nextDueDate)
                             res.status(200).json(`Created prompt review record with user id ${normUserID} and prompt id ${promptID}. Next due date: ${nextDueDate}`)
                         }

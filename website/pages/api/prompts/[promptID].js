@@ -14,7 +14,7 @@ export default function handler(req, res) {
                     res.status(200).json(result)
                 },
                 (error) => {
-                    res.status(404).json(`Record with id ${promptID} not found.`)
+                    res.status(404).json(`Prompt with id ${promptID} not found.`)
                 })
             break
         case 'PUT':
@@ -22,6 +22,6 @@ export default function handler(req, res) {
             break
         default:
             res.setHeader('Allow', ['GET', 'PUT'])
-            res.status(405).end(`Method ${method} Not Allowed`)
+            res.status(405).end(`Method ${method} not allowed`)
     }
 }

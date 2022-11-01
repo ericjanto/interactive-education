@@ -16,7 +16,7 @@ export function daysBetweenDates(first, second) {
         return Math.floor(days);
 }
 
-function addDays(date, days) {
+export function addDays(date, days) {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
     return result;

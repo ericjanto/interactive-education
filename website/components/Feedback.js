@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function postResponse(
     url,
     payload,
@@ -16,6 +14,7 @@ function postResponse(
     const response = fetch(url, options);
     response.then((r) => {r.json().then((res) => {
             console.log(res)
+            // TODO: if unauthorised: user not logged in
         })
     })
 };
@@ -24,21 +23,19 @@ function postResponse(
 export function Feedback({ promptID }) {
     const url = `/api/userprompts`
 
-    const [remembered, setRemembered] = useState(false)
-
     const payload = {
         promptID: promptID,
-        remembered: remembered,
+        remembered: null,
     }
 
     return (
         <div>
             <button onClick={() => {
-                setRemembered(false)
+                payload.remembered = false
                 postResponse(url, payload)
             }}>Forgotten</button>
             <button onClick={() => {
-                setRemembered(true)
+                payload.remembered = true
                 postResponse(url, payload)
             }}>Remembered</button>
         </div >
