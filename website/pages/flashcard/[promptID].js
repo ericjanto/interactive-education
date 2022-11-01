@@ -22,6 +22,16 @@ export default function Prompt() {
     fetcher
   )
 
+  // TODO: ensure that only listened to messages
+  // from certain origin? but which origin? maybe
+  // ensure that message is encoded / starts in a certain way
+  if (typeof window !== "undefined") {
+    window.addEventListener("message", (event) => {
+      const messageData = JSON.stringify(event.data);
+      console.log(messageData)
+    }, false)
+  }
+
   if (error) return <div>{error.message}</div>
   if (!data) return <div>Loading...</div>
 

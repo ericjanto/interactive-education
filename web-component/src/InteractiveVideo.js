@@ -22,11 +22,17 @@ export class InteractiveVideo extends HTMLElement {
         iframe.style.border = 'none'
         iframe.style.width = '100%'
         iframe.setAttribute('loading', 'eager')
-        // iframe.setAttribute(
-        //     'sandbox',
-        //     'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-modals'
-        // )
+        iframe.setAttribute(
+            'sandbox',
+            'allow-scripts allow-same-origin allow-popups allow-modals'
+        )
         shadowRoot.appendChild(iframe)
+
+        window.addEventListener("message", (event) => {
+            // TODO: ensure it's from flashcard website
+            const data = JSON.stringify(event.data);
+            console.log(data)
+        }, false)
 
         video.ontimeupdate = function () {
             var now = Math.floor(this.currentTime).toString()
@@ -35,7 +41,17 @@ export class InteractiveVideo extends HTMLElement {
                 const promptID = interactiveElements[now].id
                 iframe.src = `http://localhost:3000/flashcard/${promptID}`
                 // renderInteractiveElement(parent, times[now])
+                // TODO: check that you actually need to remove time? surely user might want to revisit question
                 times.splice(times.indexOf(now), 1)
+
+                // post message to iframe
+                iframe.addEventListener('load', () => {
+                    setTimeout(() => {
+                        const iFWindow = iframe.contentWindow
+                        iFWindow.postMessage("i love leila", iframe.src)
+                        console.log("dispatched message")
+                    }, 1000)
+                })
             }
         }
     }

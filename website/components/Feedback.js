@@ -20,12 +20,16 @@ function postResponse(
 };
 
 
-export function Feedback({ promptID }) {
+export function Feedback({ promptID, origin}) {
     const url = `/api/userprompts`
 
     const payload = {
         promptID: promptID,
         remembered: null,
+    }
+
+    if (typeof window !== "undefined") {
+        window.parent.postMessage("continue video!", origin)
     }
 
     return (
