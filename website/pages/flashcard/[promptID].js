@@ -3,6 +3,7 @@ import { Flashcard } from '../../components/Flashcard'
 import { Login } from '../../components/Login'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
+import { useEffect, useState } from 'react'
 
 const fetcher = async (url) => {
   const res = await fetch(url)
@@ -21,16 +22,6 @@ export default function Prompt() {
     () => query.promptID && `/api/prompts/${query.promptID}`,
     fetcher
   )
-
-  // TODO: ensure that only listened to messages
-  // from certain origin? but which origin? maybe
-  // ensure that message is encoded / starts in a certain way
-  if (typeof window !== "undefined") {
-    window.addEventListener("message", (event) => {
-      const messageData = JSON.stringify(event.data);
-      console.log(messageData)
-    }, false)
-  }
 
   if (error) return <div>{error.message}</div>
   if (!data) return <div>Loading...</div>

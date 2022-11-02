@@ -44,12 +44,18 @@ export class InteractiveVideo extends HTMLElement {
                 // TODO: check that you actually need to remove time? surely user might want to revisit question
                 times.splice(times.indexOf(now), 1)
 
+                const contactUrl = window.location.href
+                const contextUrl = "ContextURL not implemented yet"
+                const payload = {
+                    contact: contactUrl,
+                    context: contextUrl,
+                }                
+
                 // post message to iframe
                 iframe.addEventListener('load', () => {
                     setTimeout(() => {
                         const iFWindow = iframe.contentWindow
-                        iFWindow.postMessage("i love leila", iframe.src)
-                        console.log("dispatched message")
+                        iFWindow.postMessage(payload, iframe.src)
                     }, 1000)
                 })
             }
