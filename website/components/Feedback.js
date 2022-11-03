@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function postResponse(
     url,
     payload,
@@ -20,43 +22,59 @@ function postResponse(
     })
 };
 
+function communicateToWebcomponent(origin, sessionID) {
+    console.log(origin)
+    const payload = {
+        continueVideo: true,
+        sessionID: sessionID,
+    }
+    window.parent.postMessage(payload, origin)
+}
 
-export function Feedback({ promptID, origin }) {
+
+export function Feedback({ promptID }) {
     const url = `/api/userprompts`
 
     // TODO: ensure that only listened to messages
     // from certain origin? but which origin? maybe
     // ensure that message is encoded / starts in a certain way
-    var contact = null
+
+    // TODO: just refactor this to useState(dict) instead of two
+    // constants
+    const [contactAddress, setContactAddress] = useState(null)
+    const [sessionID, setSessionID] = useState(null)
 
     if (typeof window !== "undefined") {
         window.addEventListener("message", (event) => {
-            const recPayload = JSON.stringify(event.data)
+            const recPayload = event.data
             console.log('received payload: ', recPayload)
-            contact = recPayload.contact
+            setContactAddress(recPayload.contact)
+            setSessionID(recPayload.sessionID)
         }, false)
     }
 
     const sendPayload = {
         promptID: promptID,
         remembered: null,
-    } // useState, or just manually?
+    }
 
     // change this to be only fired on button trigger, with continue video instruction
-    if (typeof window !== "undefined" && contact) {
-        window.parent.postMessage("continue video!", origin)
-        console.log('message sent back to parent')
-    }
+    // if (typeof window !== "undefined" && contact) {
+    //     window.parent.postMessage("continue video!", origin)
+    //     console.log('message sent back to parent')
+    // }
 
     return (
         <div>
             <button onClick={() => {
                 sendPayload.remembered = false
                 postResponse(url, sendPayload)
+                communicateToWebcomponent(contactAddress, sessionID)
             }}>Forgotten</button>
             <button onClick={() => {
                 sendPayload.remembered = true
                 postResponse(url, sendPayload)
+                communicateToWebcomponent(contactAddress, sessionID)
             }}>Remembered</button>
         </div >
     )

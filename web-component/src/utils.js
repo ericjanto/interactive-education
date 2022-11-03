@@ -40,6 +40,16 @@ export function extractTimedInteractiveElements(parent) {
     return timedElements
 }
 
+export function extractPromptIDs(parent) {
+    const promptIDs = []
+    parent.querySelectorAll(':scope > interactive-element').forEach((element) => {
+        if (element instanceof InteractiveElement) {
+            promptIDs.push(element.id)
+        }
+    })
+    return promptIDs
+}
+
 /**
  * Utility function to convert a timestamp into seconds.
  *

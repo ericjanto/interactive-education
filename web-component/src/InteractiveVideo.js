@@ -1,5 +1,6 @@
 import { InteractiveElement } from './InteractiveElement'
-import { extractVideo, extractTimedInteractiveElements } from './utils'
+import { extractVideo, extractPromptIDs, extractTimedInteractiveElements } from './utils'
+
 
 function renderInteractiveElement(parent, interactiveElement) {
     // Could just have a single iframe element where I change
@@ -7,14 +8,35 @@ function renderInteractiveElement(parent, interactiveElement) {
     const shadowRoot = parent.attachShadow({ mode: 'closed' })
 }
 
+// To avoid stop sends from other flashcards to interfere with this session
+function dec2hex(dec) {
+    return dec.toString(16).padStart(2, "0")
+}
+
+function generateSessionID(len) {
+    var arr = new Uint8Array((len || 40) / 2)
+    window.crypto.getRandomValues(arr)
+    return Array.from(arr, dec2hex).join('')
+}
+
+function composeURL(promptIDs) {
+    const query = promptIDs.join('&prompts=')
+    return `http://localhost:3000/embed?prompts=${query}`
+}
+
 export class InteractiveVideo extends HTMLElement {
     #video = extractVideo(this)
     #interactiveElements = extractTimedInteractiveElements(this)
+    #promptIDs = extractPromptIDs(this)
 
     connectedCallback() {
         const video = this.#video
+        const sessionID = generateSessionID()
         const interactiveElements = this.#interactiveElements
         const times = Object.keys(interactiveElements)
+        const promptIDs = this.#promptIDs
+
+
 
         const shadowRoot = this.attachShadow({ mode: 'closed' })
         shadowRoot.innerHTML = '<slot></slot>'
@@ -22,42 +44,59 @@ export class InteractiveVideo extends HTMLElement {
         iframe.style.border = 'none'
         iframe.style.width = '100%'
         iframe.setAttribute('loading', 'eager')
-        iframe.setAttribute(
-            'sandbox',
-            'allow-scripts allow-same-origin allow-popups allow-modals'
-        )
+        iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-modals')
         shadowRoot.appendChild(iframe)
 
-        window.addEventListener("message", (event) => {
-            // TODO: ensure it's from flashcard website
-            const data = JSON.stringify(event.data);
-            console.log(data)
-        }, false)
+        window.addEventListener(
+            'message',
+            (event) => {
+                // TODO: ensure it's from flashcard website
+                const data = event.data
+                if ('sessionID' in data) {
+                    if (data.sessionID == sessionID) {
+                        if (data.continueVideo) {
+                            video.play()
+                        }
+                    }
+                }
+            },
+            false
+        )
+
+        iframe.src = composeURL(promptIDs)
 
         video.ontimeupdate = function () {
             var now = Math.floor(this.currentTime).toString()
             if (times.includes(now)) {
                 video.pause()
                 const promptID = interactiveElements[now].id
-                iframe.src = `http://localhost:3000/flashcard/${promptID}`
-                // renderInteractiveElement(parent, times[now])
-                // TODO: check that you actually need to remove time? surely user might want to revisit question
-                times.splice(times.indexOf(now), 1)
+                // iframe.src = `http://localhost:3000/flashcard/${promptID}`
+                // // renderInteractiveElement(parent, times[now])
+                // // TODO: check that you actually need to remove time? surely user might want to revisit question
+                // times.splice(times.indexOf(now), 1)
 
                 const contactUrl = window.location.href
-                const contextUrl = "ContextURL not implemented yet"
-                const payload = {
-                    contact: contactUrl,
-                    context: contextUrl,
-                }                
+                const contextUrl = 'ContextURL not implemented yet'
 
-                // post message to iframe
-                iframe.addEventListener('load', () => {
-                    setTimeout(() => {
-                        const iFWindow = iframe.contentWindow
-                        iFWindow.postMessage(payload, iframe.src)
-                    }, 1000)
-                })
+                const payload = {
+                    promptID: promptID,
+                    contact: contactUrl,
+                    sessionID: sessionID,
+                    context: contextUrl,
+                }
+
+                console.log(iframe.src)
+                const iFWindow = iframe.contentWindow
+                iFWindow.postMessage(payload, iframe.src)
+                console.log('sent payload from video')
+        
+                // iframe.addEventListener('load', () => {
+                //     setTimeout(() => {
+                //         const iFWindow = iframe.contentWindow
+                //         iFWindow.postMessage(payload, iframe.src)
+                //         console.log('sent payload from video')
+                //     }, 1000)
+                // })
             }
         }
     }

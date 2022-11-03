@@ -3,7 +3,6 @@ import { Flashcard } from '../../components/Flashcard'
 import { Login } from '../../components/Login'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import { useEffect, useState } from 'react'
 
 const fetcher = async (url) => {
   const res = await fetch(url)
