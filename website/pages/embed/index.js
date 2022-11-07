@@ -44,30 +44,18 @@ export default function Embed() {
 
     const [contactAddress, setContactAddress] = useState()
     const [visiblePrompt, setVisiblePrompt] = useState()
+    const [sessionID, setSessionID] = useState()
+    const [videoTimeStamp, setTimeStamp] = useState()
 
     if (typeof window !== "undefined") {
         window.addEventListener("message", (event) => {
             const recPayload = event.data
             console.log('received payload: ', recPayload)
-            // only update if these values differ from current state
-            if (recPayload.contact != contactAddress) {
-                setContactAddress(recPayload.contact)
-            }
-
-            if (recPayload.promptID != visiblePrompt) {
-                setVisiblePrompt(recPayload.promptID)
-            }
+            setContactAddress(recPayload.contact)
+            setSessionID(recPayload.sessionID)
+            setVisiblePrompt(recPayload.promptID)
+            setTimeStamp(recPayload.timeStamp)
         }, false)
-    }
-
-    let visibleFlashcard
-    let visibleFeedback
-    if (visiblePrompt && visiblePrompt in promptContents) {
-        visibleFlashcard = <Flashcard front={promptContents[visiblePrompt].question} back={promptContents[visiblePrompt].answer}></Flashcard>
-        visibleFeedback = <Feedback promptID={visiblePrompt}></Feedback>
-    } else {
-        visibleFlashcard = null
-        visibleFeedback = null
     }
 
     return (
@@ -76,7 +64,7 @@ export default function Embed() {
             {visiblePrompt in promptContents ? (
                 <>
                     <Flashcard front={promptContents[visiblePrompt].question} back={promptContents[visiblePrompt].answer}></Flashcard>
-                    <Feedback promptID={visiblePrompt} resetPrompt={setVisiblePrompt}></Feedback>
+                    <Feedback promptID={visiblePrompt} contactAddress={contactAddress} sessionID={sessionID} videoTimeStamp={videoTimeStamp} resetPrompt={setVisiblePrompt}></Feedback>
                 </>
             )
                 :

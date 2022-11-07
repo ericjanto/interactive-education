@@ -82,7 +82,7 @@ export class InteractiveVideo extends HTMLElement {
                     contact: contactUrl,
                     sessionID: sessionID,
                     context: contextUrl,
-                    time: now,
+                    timeStamp: now,
                 }
 
                 times.splice(times.indexOf(now), 1)

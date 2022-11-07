@@ -33,7 +33,7 @@ function communicateToWebcomponent(origin, sessionID, videoTimeStamp) {
 }
 
 
-export function Feedback({ promptID, resetPrompt }) {
+export function Feedback({ promptID, contactAddress, sessionID, videoTimeStamp, resetPrompt }) {
     const url = `/api/userprompts`
 
     // TODO: ensure that only listened to messages
@@ -42,20 +42,20 @@ export function Feedback({ promptID, resetPrompt }) {
 
     // TODO: just refactor this to useState(dict) instead of two
     // constants
-    const [contactAddress, setContactAddress] = useState(null)
-    const [sessionID, setSessionID] = useState(null)
-    const [videoTimeStamp, setTimeStamp] = useState("1")
+    // const [contactAddress, setContactAddress] = useState(null)
+    // const [sessionID, setSessionID] = useState(null)
+    // const [videoTimeStamp, setTimeStamp] = useState("1")
 
-    if (typeof window !== "undefined") {
-        window.addEventListener("message", (event) => {
-            const recPayload = event.data
-            console.log('received payload: ', recPayload)
-            setContactAddress(recPayload.contact)
-            setSessionID(recPayload.sessionID)
-            // setTimeStamp(recPayload.time)
-            // console.log("<<<", recPayload.contact)
-        }, false)
-    }
+    // if (typeof window !== "undefined") {
+    //     window.addEventListener("message", (event) => {
+    //         const recPayload = event.data
+    //         console.log('received payload: ', recPayload)
+    //         setContactAddress(recPayload.contact)
+    //         setSessionID(recPayload.sessionID)
+    //         // setTimeStamp(recPayload.time)
+    //         // console.log("<<<", recPayload.contact)
+    //     }, false)
+    // }
 
     const dbPayload = {
         promptID: promptID,

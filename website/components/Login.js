@@ -13,8 +13,8 @@ export function Login() {
                 <p>
                     Logged in as {user.name}
                     <br />
-                    User id: {getNormalisedUserID(user.sub)}
-                    <br />
+                    {/* User id: {getNormalisedUserID(user.sub)}
+                    <br /> */}
                     <a target='_blank' href='/api/auth/logout'>Logout</a>
                 </p>
             )
