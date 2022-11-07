@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import {Login} from '../components/Login'
 
 export default function Home() {
@@ -5,6 +6,7 @@ export default function Home() {
     <>
       <h1>Front-end yet to be implemented...</h1>
       <Login></Login>
+      <Link href="/review">Review prompts</Link>
     </>
   )
 }

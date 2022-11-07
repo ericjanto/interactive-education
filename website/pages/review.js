@@ -1,9 +1,39 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
+import { useState } from 'react'
+import Deck from '../components/Deck'
 
-export default function Review({user}) {
+import { getDueReviewPrompts, getNormalisedUserID } from '../utils/lib'
+import { fetchUserPromptsReviews } from '../utils/pocketbase'
+
+const fetcher = async (url) => {
+    const res = await fetch(url)
+    const data = await res.json()
+
+    if (res.status !== 200) {
+        throw new Error(data)
+    }
+
+    return data
+}
+
+export default function Review({ user }) {
+    const [promptsToReview, setPromptsToReview] = useState()
+    const [fetched, setFetched] = useState(false)
+
+    // TODO: this only shows 50 reviews at most
+    if (!fetched) {
+        const dbRes = fetchUserPromptsReviews(getNormalisedUserID(user.sub))
+        dbRes.then(
+            (result) => {
+                setPromptsToReview(getDueReviewPrompts(result))
+                setFetched(true)
+            })
+    }
+
     return (
         <>
             <h1>Review page</h1>
+            {promptsToReview ? <Deck promptsToReview={promptsToReview}></Deck> : "Retrieving prompt to review..."}
         </>
     )
 }
