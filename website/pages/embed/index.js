@@ -3,6 +3,7 @@ import { useState } from "react"
 import useSWR from "swr"
 import { Flashcard } from "../../components/Flashcard"
 import { Feedback } from "../../components/Feedback"
+import { Login } from "../../components/Login"
 
 
 const fetcher = async (url) => {
@@ -48,7 +49,7 @@ export default function Embed() {
         window.addEventListener("message", (event) => {
             const recPayload = event.data
             console.log('received payload: ', recPayload)
-            // only update if these values differ from current state!
+            // only update if these values differ from current state
             if (recPayload.contact != contactAddress) {
                 setContactAddress(recPayload.contact)
             }
@@ -56,8 +57,6 @@ export default function Embed() {
             if (recPayload.promptID != visiblePrompt) {
                 setVisiblePrompt(recPayload.promptID)
             }
-            
-            // TODO: setSessionID(recPayload.sessionID)
         }, false)
     }
 
@@ -67,15 +66,26 @@ export default function Embed() {
         visibleFlashcard = <Flashcard front={promptContents[visiblePrompt].question} back={promptContents[visiblePrompt].answer}></Flashcard>
         visibleFeedback = <Feedback promptID={visiblePrompt}></Feedback>
     } else {
-        visibleFlashcard = <></>
-        visibleFeedback = <></>
+        visibleFlashcard = null
+        visibleFeedback = null
     }
 
     return (
-        <div>
-            {visibleFlashcard}
-            {visibleFeedback}
-            i love leila
-        </div>
+        <>
+            <Login></Login>
+            {visiblePrompt in promptContents ? (
+                <>
+                    <Flashcard front={promptContents[visiblePrompt].question} back={promptContents[visiblePrompt].answer}></Flashcard>
+                    <Feedback promptID={visiblePrompt} resetPrompt={setVisiblePrompt}></Feedback>
+                </>
+            )
+                :
+                (
+                    <div>Watch video</div>
+
+                )
+
+            }
+        </>
     )
 }

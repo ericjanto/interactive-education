@@ -1,7 +1,6 @@
 import { InteractiveElement } from './InteractiveElement'
 import { extractVideo, extractPromptIDs, extractTimedInteractiveElements } from './utils'
 
-
 function renderInteractiveElement(parent, interactiveElement) {
     // Could just have a single iframe element where I change
     // the src and if src set, display, otherwise don't display
@@ -10,7 +9,7 @@ function renderInteractiveElement(parent, interactiveElement) {
 
 // To avoid stop sends from other flashcards to interfere with this session
 function dec2hex(dec) {
-    return dec.toString(16).padStart(2, "0")
+    return dec.toString(16).padStart(2, '0')
 }
 
 function generateSessionID(len) {
@@ -36,8 +35,6 @@ export class InteractiveVideo extends HTMLElement {
         const times = Object.keys(interactiveElements)
         const promptIDs = this.#promptIDs
 
-
-
         const shadowRoot = this.attachShadow({ mode: 'closed' })
         shadowRoot.innerHTML = '<slot></slot>'
         const iframe = document.createElement('iframe')
@@ -56,6 +53,12 @@ export class InteractiveVideo extends HTMLElement {
                     if (data.sessionID == sessionID) {
                         if (data.continueVideo) {
                             video.play()
+                            // Bit of a hack -- add timestamp a second after video 
+                            if ('timeStamp' in data) {
+                                setTimeout(() => {
+                                    times.push(data.timeStamp)
+                                }, 1000)
+                            }
                         }
                     }
                 }
@@ -70,10 +73,6 @@ export class InteractiveVideo extends HTMLElement {
             if (times.includes(now)) {
                 video.pause()
                 const promptID = interactiveElements[now].id
-                // iframe.src = `http://localhost:3000/flashcard/${promptID}`
-                // // renderInteractiveElement(parent, times[now])
-                // // TODO: check that you actually need to remove time? surely user might want to revisit question
-                // times.splice(times.indexOf(now), 1)
 
                 const contactUrl = window.location.href
                 const contextUrl = 'ContextURL not implemented yet'
@@ -83,20 +82,14 @@ export class InteractiveVideo extends HTMLElement {
                     contact: contactUrl,
                     sessionID: sessionID,
                     context: contextUrl,
+                    time: now,
                 }
 
-                console.log(iframe.src)
+                times.splice(times.indexOf(now), 1)
+
                 const iFWindow = iframe.contentWindow
                 iFWindow.postMessage(payload, iframe.src)
                 console.log('sent payload from video')
-        
-                // iframe.addEventListener('load', () => {
-                //     setTimeout(() => {
-                //         const iFWindow = iframe.contentWindow
-                //         iFWindow.postMessage(payload, iframe.src)
-                //         console.log('sent payload from video')
-                //     }, 1000)
-                // })
             }
         }
     }

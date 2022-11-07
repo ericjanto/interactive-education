@@ -22,17 +22,18 @@ function postResponse(
     })
 };
 
-function communicateToWebcomponent(origin, sessionID) {
-    console.log(origin)
+function communicateToWebcomponent(origin, sessionID, videoTimeStamp) {
+    console.log(">>>", origin)
     const payload = {
         continueVideo: true,
         sessionID: sessionID,
+        timeStamp: videoTimeStamp
     }
     window.parent.postMessage(payload, origin)
 }
 
 
-export function Feedback({ promptID }) {
+export function Feedback({ promptID, resetPrompt }) {
     const url = `/api/userprompts`
 
     // TODO: ensure that only listened to messages
@@ -43,6 +44,7 @@ export function Feedback({ promptID }) {
     // constants
     const [contactAddress, setContactAddress] = useState(null)
     const [sessionID, setSessionID] = useState(null)
+    const [videoTimeStamp, setTimeStamp] = useState("1")
 
     if (typeof window !== "undefined") {
         window.addEventListener("message", (event) => {
@@ -50,31 +52,29 @@ export function Feedback({ promptID }) {
             console.log('received payload: ', recPayload)
             setContactAddress(recPayload.contact)
             setSessionID(recPayload.sessionID)
+            // setTimeStamp(recPayload.time)
+            // console.log("<<<", recPayload.contact)
         }, false)
     }
 
-    const sendPayload = {
+    const dbPayload = {
         promptID: promptID,
         remembered: null,
     }
 
-    // change this to be only fired on button trigger, with continue video instruction
-    // if (typeof window !== "undefined" && contact) {
-    //     window.parent.postMessage("continue video!", origin)
-    //     console.log('message sent back to parent')
-    // }
-
     return (
         <div>
             <button onClick={() => {
-                sendPayload.remembered = false
-                postResponse(url, sendPayload)
-                communicateToWebcomponent(contactAddress, sessionID)
+                dbPayload.remembered = false
+                postResponse(url, dbPayload)
+                communicateToWebcomponent(contactAddress, sessionID, videoTimeStamp)
+                resetPrompt(null)
             }}>Forgotten</button>
             <button onClick={() => {
-                sendPayload.remembered = true
-                postResponse(url, sendPayload)
-                communicateToWebcomponent(contactAddress, sessionID)
+                dbPayload.remembered = true
+                postResponse(url, dbPayload)
+                communicateToWebcomponent(contactAddress, sessionID, videoTimeStamp)
+                resetPrompt(null)
             }}>Remembered</button>
         </div >
     )
