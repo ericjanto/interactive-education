@@ -23,7 +23,7 @@ export default function Embed() {
 
     // TODO: can you show error message if not embedded but called as parent window?
     if (!query.prompts) {
-        return <div>Loading query prompts...</div>
+        return <div>Please provide valid query prompts in the URL</div>
     }
 
     // {prompt id: {front, back}}
@@ -39,9 +39,6 @@ export default function Embed() {
         }
     })
 
-    if (!promptContents) {
-        return <div>Retrieving prompt contents...</div>
-    }
 
     const [contactAddress, setContactAddress] = useState()
     const [visiblePrompt, setVisiblePrompt] = useState()
@@ -51,12 +48,16 @@ export default function Embed() {
     if (typeof window !== "undefined") {
         window.addEventListener("message", (event) => {
             const recPayload = event.data
-            console.log('received payload: ', recPayload)
+            // console.log('received payload: ', recPayload)
             setContactAddress(recPayload.contact)
             setSessionID(recPayload.sessionID)
             setVisiblePrompt(recPayload.promptID)
             setTimeStamp(recPayload.timeStamp)
         }, false)
+    }
+
+    if (!promptContents) {
+        return <div>Retrieving prompt contents...</div>
     }
 
     return (

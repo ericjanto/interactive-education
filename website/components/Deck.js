@@ -16,23 +16,31 @@ const fetcher = async (url) => {
 }
 
 export default function Deck({ promptsToReview }) {
-    const [reviewQueue, setReviewQueue] = useState(["ru7c3q3uox0y9rb", "ru7c3q3uox0y9rb", "ru7c3q3uox0y9rb"])
+    const [current, setCurrent] = useState([0, promptsToReview[0]])
 
-    const current = reviewQueue[0]
+    function updateCurrent() {
+        if (current[0] + 1 < promptsToReview.length) {
+            setCurrent([current[0] + 1, promptsToReview[current[0] + 1]])
+        } else {
+            setCurrent([])
+        }
+    }
+
     const { data, error } = useSWR(
-        () => current && `/api/prompts/${current}`,
+        () => current[1] && `/api/prompts/${current[1]}`,
         fetcher
     )
 
+    if (!current[1]) return <div>All reviewed, check back later!</div>
     if (error) return <div>{error.message}</div>
-    if (!data) return <div>All reviewed...</div>
+    if (!data) return <div>Loading flashcard...</div>
 
     return (
         <>
-            <div>Flashcard deck. Left to review: {reviewQueue.length}</div>
+            <div>Flashcard deck. Left to review: {promptsToReview.length - current[0]}</div>
             <br />
             <Flashcard front={data.question} back={data.answer}></Flashcard>
-            <SimpleFeedback promptID={current} reviewQueue={reviewQueue} setReviewQueue={setReviewQueue}></SimpleFeedback>
+            <SimpleFeedback promptID={current[1]} onFeedback={updateCurrent}></SimpleFeedback>
         </>
     )
 }

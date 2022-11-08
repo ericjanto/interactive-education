@@ -1,6 +1,7 @@
 import { InteractiveElement } from './InteractiveElement'
 import { extractVideo, extractPromptIDs, extractTimedInteractiveElements } from './utils'
 
+
 function renderInteractiveElement(parent, interactiveElement) {
     // Could just have a single iframe element where I change
     // the src and if src set, display, otherwise don't display
@@ -23,6 +24,21 @@ function composeURL(promptIDs) {
     return `http://localhost:3000/embed?prompts=${query}`
 }
 
+function getHeightForReviewAreaOfWidth(width) {
+    const gridUnit = 8;
+    const edgeMargin = 16;
+
+    const promptWidth = Math.min(500, width - edgeMargin * 2);
+    const promptHeight = Math.round((promptWidth * 5) / 6);
+    return promptHeight + (7 + 11) * gridUnit;
+}
+
+function setIFrameHeight(iframe) {
+    const effectiveWidth = iframe.getBoundingClientRect().width;
+    console.log(effectiveWidth)
+    iframe.style.height = `${getHeightForReviewAreaOfWidth(effectiveWidth)}px`;
+}
+
 export class InteractiveVideo extends HTMLElement {
     #video = extractVideo(this)
     #interactiveElements = extractTimedInteractiveElements(this)
@@ -40,8 +56,13 @@ export class InteractiveVideo extends HTMLElement {
         const iframe = document.createElement('iframe')
         iframe.style.border = 'none'
         iframe.style.width = '100%'
+        setIFrameHeight(iframe)
+
         iframe.setAttribute('loading', 'eager')
-        iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-modals allow-forms')
+        iframe.setAttribute(
+            'sandbox',
+            'allow-scripts allow-same-origin allow-popups allow-modals allow-forms'
+        )
         shadowRoot.appendChild(iframe)
 
         window.addEventListener(
@@ -52,8 +73,10 @@ export class InteractiveVideo extends HTMLElement {
                 if ('sessionID' in data) {
                     if (data.sessionID == sessionID) {
                         if (data.continueVideo) {
+                            video.scrollIntoView({ behavior: "smooth" })
+                            video.controls = true
                             video.play()
-                            // Bit of a hack -- add timestamp a second after video 
+                            // Bit of a hack -- add timestamp a second after video
                             if ('timeStamp' in data) {
                                 setTimeout(() => {
                                     times.push(data.timeStamp)
@@ -66,12 +89,25 @@ export class InteractiveVideo extends HTMLElement {
             false
         )
 
-        iframe.src = composeURL(promptIDs)
+        requestAnimationFrame(() => {
+            setIFrameHeight(iframe);
+            iframe.src = composeURL(promptIDs)
+        });
 
         video.ontimeupdate = function () {
             var now = Math.floor(this.currentTime).toString()
             if (times.includes(now)) {
                 video.pause()
+                video.controls = false
+                iframe.scrollIntoView({ behavior: "smooth" })
+
+                // Ensure that not in fullscreen
+                try {
+                    window.document.exitFullscreen()
+                } catch (error) {
+                    console.error(error)
+                }
+
                 const promptID = interactiveElements[now].id
 
                 const contactUrl = window.location.href
@@ -89,7 +125,6 @@ export class InteractiveVideo extends HTMLElement {
 
                 const iFWindow = iframe.contentWindow
                 iFWindow.postMessage(payload, iframe.src)
-                console.log('sent payload from video')
             }
         }
     }

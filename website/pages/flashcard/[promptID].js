@@ -29,7 +29,7 @@ export default function Prompt() {
     <>
       <Login></Login>
       <Flashcard front={data.question} back={data.answer}></Flashcard>
-      <Feedback promptID={query.promptID}></Feedback>
+      {/* <Feedback promptID={query.promptID}></Feedback> */}
     </>
   )
 }

@@ -23,7 +23,6 @@ function postResponse(
 };
 
 function communicateToWebcomponent(origin, sessionID, videoTimeStamp) {
-    console.log(">>>", origin)
     const payload = {
         continueVideo: true,
         sessionID: sessionID,

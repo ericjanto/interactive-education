@@ -20,7 +20,7 @@ function postResponse(
     })
 };
 
-export function SimpleFeedback({ promptID, reviewQueue, setReviewQueue }) {
+export function SimpleFeedback({ promptID, onFeedback }) {
     const url = `/api/userprompts`
     const dbPayload = {
         promptID: promptID,
@@ -31,14 +31,13 @@ export function SimpleFeedback({ promptID, reviewQueue, setReviewQueue }) {
         <div>
             <button onClick={() => {
                 dbPayload.remembered = false
-                // postResponse(url, dbPayload)
-                // TODO: instead, just remove first element
-                setReviewQueue(reviewQueue.copyWithin(2))
+                postResponse(url, dbPayload)
+                onFeedback()
             }}>Forgotten</button>
             <button onClick={() => {
                 dbPayload.remembered = true
-                // postResponse(url, dbPayload)
-                setReviewQueue(reviewQueue.copyWithin(2))
+                postResponse(url, dbPayload)
+                onFeedback()
             }}>Remembered</button>
         </div >
     )
