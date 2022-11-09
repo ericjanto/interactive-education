@@ -1,9 +1,7 @@
-import { useState } from "react";
-
 function postResponse(
-    url,
     payload,
 ) {
+    const url = `/api/userprompts`
     const options = {
         method: "POST",
         body: JSON.stringify(payload),
@@ -22,39 +20,12 @@ function postResponse(
     })
 };
 
-function communicateToWebcomponent(origin, sessionID, videoTimeStamp) {
-    const payload = {
-        continueVideo: true,
-        sessionID: sessionID,
-        timeStamp: videoTimeStamp
-    }
-    window.parent.postMessage(payload, origin)
-}
 
-
-export function Feedback({ promptID, contactAddress, sessionID, videoTimeStamp, resetPrompt }) {
-    const url = `/api/userprompts`
+export function Feedback({ promptID, onFeedback }) {
 
     // TODO: ensure that only listened to messages
     // from certain origin? but which origin? maybe
     // ensure that message is encoded / starts in a certain way
-
-    // TODO: just refactor this to useState(dict) instead of two
-    // constants
-    // const [contactAddress, setContactAddress] = useState(null)
-    // const [sessionID, setSessionID] = useState(null)
-    // const [videoTimeStamp, setTimeStamp] = useState("1")
-
-    // if (typeof window !== "undefined") {
-    //     window.addEventListener("message", (event) => {
-    //         const recPayload = event.data
-    //         console.log('received payload: ', recPayload)
-    //         setContactAddress(recPayload.contact)
-    //         setSessionID(recPayload.sessionID)
-    //         // setTimeStamp(recPayload.time)
-    //         // console.log("<<<", recPayload.contact)
-    //     }, false)
-    // }
 
     const dbPayload = {
         promptID: promptID,
@@ -65,15 +36,13 @@ export function Feedback({ promptID, contactAddress, sessionID, videoTimeStamp, 
         <div>
             <button onClick={() => {
                 dbPayload.remembered = false
-                postResponse(url, dbPayload)
-                communicateToWebcomponent(contactAddress, sessionID, videoTimeStamp)
-                resetPrompt(null)
+                postResponse(dbPayload)
+                onFeedback()
             }}>Forgotten</button>
             <button onClick={() => {
                 dbPayload.remembered = true
-                postResponse(url, dbPayload)
-                communicateToWebcomponent(contactAddress, sessionID, videoTimeStamp)
-                resetPrompt(null)
+                postResponse(dbPayload)
+                onFeedback()
             }}>Remembered</button>
         </div >
     )

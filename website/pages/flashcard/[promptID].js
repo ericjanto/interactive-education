@@ -3,6 +3,7 @@ import { Flashcard } from '../../components/Flashcard'
 import { Login } from '../../components/Login'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
+import ReviewItem from '../../components/ReviewItem'
 
 const fetcher = async (url) => {
   const res = await fetch(url)
@@ -28,8 +29,7 @@ export default function Prompt() {
   return (
     <>
       <Login></Login>
-      <Flashcard front={data.question} back={data.answer}></Flashcard>
-      {/* <Feedback promptID={query.promptID}></Feedback> */}
+      <ReviewItem promptID={query.promptID} front={data.question} back={data.answer}></ReviewItem>
     </>
   )
 }

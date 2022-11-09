@@ -1,7 +1,6 @@
 import { InteractiveElement } from './InteractiveElement'
 import { extractVideo, extractPromptIDs, extractTimedInteractiveElements } from './utils'
 
-
 function renderInteractiveElement(parent, interactiveElement) {
     // Could just have a single iframe element where I change
     // the src and if src set, display, otherwise don't display
@@ -25,18 +24,18 @@ function composeURL(promptIDs) {
 }
 
 function getHeightForReviewAreaOfWidth(width) {
-    const gridUnit = 8;
-    const edgeMargin = 16;
+    const gridUnit = 8
+    const edgeMargin = 16
 
-    const promptWidth = Math.min(500, width - edgeMargin * 2);
-    const promptHeight = Math.round((promptWidth * 5) / 6);
-    return promptHeight + (7 + 11) * gridUnit;
+    const promptWidth = Math.min(500, width - edgeMargin * 2)
+    const promptHeight = Math.round((promptWidth * 5) / 6)
+    return promptHeight + (7 + 11) * gridUnit
 }
 
 function setIFrameHeight(iframe) {
-    const effectiveWidth = iframe.getBoundingClientRect().width;
+    const effectiveWidth = iframe.getBoundingClientRect().width
     console.log(effectiveWidth)
-    iframe.style.height = `${getHeightForReviewAreaOfWidth(effectiveWidth)}px`;
+    iframe.style.height = `${getHeightForReviewAreaOfWidth(effectiveWidth)}px`
 }
 
 export class InteractiveVideo extends HTMLElement {
@@ -73,7 +72,7 @@ export class InteractiveVideo extends HTMLElement {
                 if ('sessionID' in data) {
                     if (data.sessionID == sessionID) {
                         if (data.continueVideo) {
-                            video.scrollIntoView({ behavior: "smooth" })
+                            video.scrollIntoView({ behavior: 'smooth' })
                             video.controls = true
                             video.play()
                             // Bit of a hack -- add timestamp a second after video
@@ -90,16 +89,16 @@ export class InteractiveVideo extends HTMLElement {
         )
 
         requestAnimationFrame(() => {
-            setIFrameHeight(iframe);
+            setIFrameHeight(iframe)
             iframe.src = composeURL(promptIDs)
-        });
+        })
 
         video.ontimeupdate = function () {
             var now = Math.floor(this.currentTime).toString()
             if (times.includes(now)) {
                 video.pause()
                 video.controls = false
-                iframe.scrollIntoView({ behavior: "smooth" })
+                iframe.scrollIntoView({ behavior: 'smooth' })
 
                 // Ensure that not in fullscreen
                 try {

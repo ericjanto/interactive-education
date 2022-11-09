@@ -1,7 +1,7 @@
 import { useState } from "react"
 import useSWR from "swr"
+import { Feedback } from "./Feedback"
 import { Flashcard } from "./Flashcard"
-import { SimpleFeedback } from "./SimpleFeedback"
 
 
 const fetcher = async (url) => {
@@ -40,7 +40,7 @@ export default function Deck({ promptsToReview }) {
             <div>Flashcard deck. Left to review: {promptsToReview.length - current[0]}</div>
             <br />
             <Flashcard front={data.question} back={data.answer}></Flashcard>
-            <SimpleFeedback promptID={current[1]} onFeedback={updateCurrent}></SimpleFeedback>
+            <Feedback promptID={current[1]} onFeedback={updateCurrent}></Feedback>
         </>
     )
 }

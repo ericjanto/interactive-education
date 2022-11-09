@@ -18,6 +18,15 @@ const fetcher = async (url) => {
     return data
 }
 
+function communicateToWebcomponent(origin, sessionID, videoTimeStamp) {
+    const payload = {
+        continueVideo: true,
+        sessionID: sessionID,
+        timeStamp: videoTimeStamp
+    }
+    window.parent.postMessage(payload, origin)
+}
+
 export default function Embed() {
     const { query } = useRouter()
 
@@ -60,13 +69,18 @@ export default function Embed() {
         return <div>Retrieving prompt contents...</div>
     }
 
+    function onFeedback() {
+        communicateToWebcomponent(contactAddress, sessionID, videoTimeStamp)
+        setVisiblePrompt(null)
+    }
+
     return (
         <>
             <Login></Login>
             {visiblePrompt in promptContents ? (
                 <>
                     <Flashcard front={promptContents[visiblePrompt].question} back={promptContents[visiblePrompt].answer}></Flashcard>
-                    <Feedback promptID={visiblePrompt} contactAddress={contactAddress} sessionID={sessionID} videoTimeStamp={videoTimeStamp} resetPrompt={setVisiblePrompt}></Feedback>
+                    <Feedback promptID={visiblePrompt} onFeedback={onFeedback}></Feedback>
                 </>
             )
                 :
