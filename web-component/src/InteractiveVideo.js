@@ -79,7 +79,7 @@ export class InteractiveVideo extends HTMLElement {
                             if ('timeStamp' in data) {
                                 setTimeout(() => {
                                     times.push(data.timeStamp)
-                                }, 1000)
+                                }, 1500)
                             }
                         }
                     }
