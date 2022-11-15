@@ -1,4 +1,3 @@
-import { styled } from '@stitches/react'
 import { useState } from 'react'
 
 import ReactMarkdown from 'react-markdown'
@@ -8,38 +7,38 @@ import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
 
 export function Flashcard({ front, back }) {
-    const FlexContainer = styled('div', {
-        display: "flex",
-        flexWrap: 'wrap',
-        flexDirection: 'column',
-        boxSizing: 'border-box',
-        position: 'relative',
-        height: '100%',
-    })
+    const [showQuestion, setShowQuestion] = useState(true)
 
-    const FlexItem = styled('div', {
-
-    })
-
-    const [showAnswer, setShowAnswer] = useState(false)
     return (
-        <FlexContainer>
-            <ReactMarkdown
-                children={front}
-                remarkPlugins={[remarkMath]}
-                rehypePlugins={[rehypeKatex]}
-            />
-            {showAnswer ?
-                <ReactMarkdown
-                    children={back}
+        <>
+            <div className='hidden-answer' style={!showQuestion ? { transform: 'translateY(0px)' } : { transform: 'translateY(10px)' }}>
+                {!showQuestion ? <ReactMarkdown
+                    children={front}
                     remarkPlugins={[remarkMath]}
                     rehypePlugins={[rehypeKatex]}
-                />
-                :
-                <button onClick={() => { setShowAnswer(true) }}>
-                    Show answer
-                </button>
-            }
-        </FlexContainer>
+                /> : <></>}
+            </div>
+            <div className='centre-stage' style={!showQuestion ? { transform: 'translateY(0px)' } : { transform: 'translateY(10px)' }}>
+                {
+                    showQuestion ?
+                        <ReactMarkdown
+                            children={front}
+                            remarkPlugins={[remarkMath]}
+                            rehypePlugins={[rehypeKatex]}
+                        /> :
+                        <ReactMarkdown
+                            children={back}
+                            remarkPlugins={[remarkMath]}
+                            rehypePlugins={[rehypeKatex]}
+                        />
+                }
+            </div>
+                {
+                    showQuestion ?
+                        <button id={1} className='prompt-button z-priority' onClick={() => { setShowQuestion(false); }}>
+                            Show answer
+                        </button> : <></>
+                }
+        </>
     )
 }

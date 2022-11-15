@@ -33,13 +33,13 @@ export function Feedback({ promptID, onFeedback }) {
     }
 
     return (
-        <div>
-            <button onClick={() => {
+        <div className="lowerbar feedback-buttons">
+            <button className="prompt-button" onClick={() => {
                 dbPayload.remembered = false
                 postResponse(dbPayload)
                 onFeedback()
             }}>Forgotten</button>
-            <button onClick={() => {
+            <button className="prompt-button" onClick={() => {
                 dbPayload.remembered = true
                 postResponse(dbPayload)
                 onFeedback()

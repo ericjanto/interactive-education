@@ -53,6 +53,7 @@ export class InteractiveVideo extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: 'closed' })
         shadowRoot.innerHTML = '<slot></slot>'
         const iframe = document.createElement('iframe')
+
         iframe.style.border = 'none'
         iframe.style.width = '100%'
         setIFrameHeight(iframe)

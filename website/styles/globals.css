@@ -1,9 +1,17 @@
+:root, button {
+  font-family: 'Inter', sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: 'Inter var', sans-serif;
+  }
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -13,4 +21,111 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.review-item {
+  background-color: #fa863d;
+  height: 500px;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+}
+
+.topbar {
+  min-height: 48px;
+  display: flex;
+  flex-basis: auto;
+  flex-shrink: 0;
+  position: relative;
+  align-items: center;
+  flex-direction: row;
+  height: 48px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.statusbar {
+  min-height: 32px;
+  align-items: center;
+  padding-left: 16px;
+  display: flex;
+  flex-basis: auto;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.review-area {
+  align-items: stretch;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  position: relative;
+}
+
+.flashcard {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+  flex: 1 1 0%;
+}
+
+.feedback {
+  flex-direction: row;
+  min-height: 56px;
+  display: flex;
+  box-sizing: border-box;
+  flex-basis: auto;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.hidden-answer {
+  width: 66.6%;
+  flex: 2 1 0%;
+  padding-left: 16px;
+  overflow-x: scroll;
+  font-size: 14px;
+  transition: transform 0.2s;
+}
+
+.centre-stage {
+  flex: 4 1 0%;
+  margin-left: 16px;
+  max-width: 66.6%;
+  /* TODO: ideally, would want a dynamic font-size depending
+  on the container width */
+  font-size: 22px;
+  overflow-x: scroll;
+  transition: transform 0.25s;
+}
+
+.lowerbar {
+  height: 48px;
+  position: absolute;
+  top: calc(100% - 48px);
+  width: 100%;
+}
+
+.z-priority {
+  z-index: 1;
+}
+
+.prompt-button {
+  height: 48px;
+  width: 100%;
+  background-color: #fa863d;
+  border: none;
+  flex: 1 1 0%;
+}
+
+.prompt-button:hover {
+  background-color: rgb(244, 116, 47);
+}
+
+.feedback-buttons {
+  display: flex;
 }

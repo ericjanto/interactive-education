@@ -12,7 +12,6 @@
     "@auth0/nextjs-auth0": "^1.9.1",
     "@radix-ui/react-aspect-ratio": "^1.0.1",
     "@radix-ui/react-tabs": "^1.0.0",
-    "@stitches/react": "^1.2.8",
     "next": "12.2.2",
     "pocketbase": "^0.7.1",
     "react": "18.2.0",
