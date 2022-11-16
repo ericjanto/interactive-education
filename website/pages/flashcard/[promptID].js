@@ -1,6 +1,3 @@
-import { Feedback } from '../../components/Feedback'
-import { Flashcard } from '../../components/Flashcard'
-import { Login } from '../../components/Login'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import ReviewItem from '../../components/ReviewItem'
@@ -28,8 +25,7 @@ export default function Prompt() {
 
   return (
     <>
-      <Login></Login>
-      <ReviewItem promptID={query.promptID} front={data.question} back={data.answer}></ReviewItem>
+      <ReviewItem promptID={query.promptID} front={data.question} back={data.answer} onFeedback={() => {}}></ReviewItem>
     </>
   )
 }

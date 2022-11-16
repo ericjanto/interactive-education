@@ -34,8 +34,17 @@ function getHeightForReviewAreaOfWidth(width) {
 
 function setIFrameHeight(iframe) {
     const effectiveWidth = iframe.getBoundingClientRect().width
-    console.log(effectiveWidth)
+    // console.log(effectiveWidth)
     iframe.style.height = `${getHeightForReviewAreaOfWidth(effectiveWidth)}px`
+}
+
+function extractGoToTimestamp(url) {
+    const timeIdentifier = '?t='
+    if (url.indexOf(timeIdentifier) > 0) {
+        return url.substring(url.indexOf(timeIdentifier) + timeIdentifier.length)
+    } else {
+        return null
+    }
 }
 
 export class InteractiveVideo extends HTMLElement {
@@ -93,6 +102,30 @@ export class InteractiveVideo extends HTMLElement {
             setIFrameHeight(iframe)
             iframe.src = composeURL(promptIDs)
         })
+
+        const goToTimestamp = extractGoToTimestamp(window.location.href)
+
+
+        // const interval = setInterval(() => {
+        //     console.log(goToTimestamp)
+        //     video.currentTime = goToTimestamp
+        // }, video.readyState === 4 ? null : 1000)
+
+        // video.addEventListener('loadeddata', () => {
+        //     if (video.readyState === 4) {
+        //         console.log('ho')
+        //         video.currentTime = goToTimestamp
+        //     }
+
+        // });
+        var jumpedYet = false
+
+        video.oncanplay = function () {
+            if (goToTimestamp && !jumpedYet) {
+                video.currentTime = goToTimestamp
+                jumpedYet = true
+            }
+        }
 
         video.ontimeupdate = function () {
             var now = Math.floor(this.currentTime).toString()

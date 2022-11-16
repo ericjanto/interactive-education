@@ -1,10 +1,9 @@
 import { useRouter } from "next/router"
 import { useState } from "react"
 import useSWR from "swr"
+import Image from 'next/image'
 
-import { Flashcard } from "../../components/Flashcard"
-import { Feedback } from "../../components/Feedback"
-import { Login } from "../../components/Login"
+import ReviewItem from "../../components/ReviewItem"
 
 
 const fetcher = async (url) => {
@@ -25,6 +24,10 @@ function communicateToWebcomponent(origin, sessionID, videoTimeStamp) {
         timeStamp: videoTimeStamp
     }
     window.parent.postMessage(payload, origin)
+}
+
+function getQueryrank(promptID, queryPrompts) {
+    return queryPrompts.indexOf(promptID) + 1
 }
 
 export default function Embed() {
@@ -61,6 +64,7 @@ export default function Embed() {
             setContactAddress(recPayload.contact)
             setSessionID(recPayload.sessionID)
             setVisiblePrompt(recPayload.promptID)
+            setQueryRank(getQueryrank(recPayload.promptID, query.prompts))
             setTimeStamp(recPayload.timeStamp)
         }, false)
     }
@@ -74,21 +78,38 @@ export default function Embed() {
         setVisiblePrompt(null)
     }
 
+    const [queryRank, setQueryRank] = useState(0)
+    const totalPrompts = Object.keys(promptContents).length
+
     return (
         <>
-            <Login></Login>
             {visiblePrompt in promptContents ? (
                 <>
-                    <Flashcard front={promptContents[visiblePrompt].question} back={promptContents[visiblePrompt].answer}></Flashcard>
-                    <Feedback promptID={visiblePrompt} onFeedback={onFeedback}></Feedback>
+                    <ReviewItem promptID={visiblePrompt}
+                        front={promptContents[visiblePrompt].question}
+                        back={promptContents[visiblePrompt].answer}
+                        n={queryRank}
+                        total={totalPrompts}
+                        onFeedback={onFeedback}></ReviewItem>
                 </>
             )
                 :
                 (
-                    <div>Watch video</div>
-
+                    <div className="placeholder">
+                        <div className='topbar'>
+                            <div className="topbar-info information">
+                                {queryRank < totalPrompts || totalPrompts == 0
+                                    ?
+                                    'Watch the video to activate questions.'
+                                    :
+                                    'All questions answered.'}
+                            </div>
+                            <div className="topbar-status">
+                                {queryRank}/{totalPrompts}
+                            </div>
+                        </div>
+                    </div>
                 )
-
             }
         </>
     )

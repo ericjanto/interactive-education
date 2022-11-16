@@ -1,6 +1,7 @@
-import { useUser } from '@auth0/nextjs-auth0'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useInterval } from 'usehooks-ts'
+import Link from 'next/link'
+import Image from 'next/image'
 
 // TODO: change this to an api endpoint which returns whether user is authenticated
 function fetchAndSetUser(setUser) {
@@ -10,7 +11,7 @@ function fetchAndSetUser(setUser) {
     response.then((r) => {
         r.json().then((res) => {
             if (res.error == 'not_authenticated') {
-                setUser(null)                
+                setUser(null)
             } else {
                 setUser(res.nickname)
             }
@@ -19,19 +20,36 @@ function fetchAndSetUser(setUser) {
 };
 
 export function UserStatus() {
-    const [user, setUser] = useState()
+    const [user, setUser] = useState('fetching')
 
     useInterval(
         () => {
             fetchAndSetUser(setUser)
         },
-        user ? null : 1500,
+        1500
     )
 
     // no user --> red dot and refetch
     // user --> green dot
+    if (user == 'fetching') {
+        return <div className='topbar-userstatus'>Checking user...</div>
+    }
 
     return (
-        <div>{JSON.stringify(user)}</div>
+        // TODO: switch(user)
+        <div className='topbar-userstatus'>
+            {user ?
+                <div>
+                    {`Answers are saved to `}
+                    <a target='_blank' href='http://localhost:3000/'>RemWatch</a>
+                </div>
+                :
+                <div>
+                    <a target='_blank' href='/api/auth/login'>Login</a>
+                    {` to save answers to `}
+                    <a target='_blank' href='http://localhost:3000/'>RemWatch</a>
+                </div>
+            }
+        </div>
     )
 }
