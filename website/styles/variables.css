@@ -1,0 +1,34 @@
+:root {
+    /* Generic */
+    --dark-font-colour: #000000cc;
+    --medium-font-colour: #60656c;
+    --light-font-colour: #868e96;
+    --information-font-colour: #ffffff;
+
+    /* Flashcard */
+    --f-background-colour: #fa863d;
+    --f-information-colour: #b73d00;
+    --f-border: 1px solid #f4742f;
+
+    /* --link-color: #15beec;
+    --link-hover: #aaaaaa;
+    --dark-link-color: #1485a4;
+    --background: #141414;
+    --light-background: #2f2f2f;
+    --border-color: #ffffff; */
+
+    /* Sizes and proportions */
+    --smaller-font-size: 0.9rem;
+    --normal-font-size: 1rem;
+    --medium-font-size: 1.1rem;
+    --larger-font-size: 1.2rem;
+    --top-font-size: 1.3rem;
+
+    /* --small-screen: 600px;
+    --normal-screen: 768px;
+    --larger-screen: 992px;
+    --largest-screen: 1200px; */
+
+    /* Transitions */
+    /* --transition-long: 480ms; */
+}

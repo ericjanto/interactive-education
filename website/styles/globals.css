@@ -1,3 +1,5 @@
+@import 'variables.css';
+
 :root, button {
   font-family: 'Inter', sans-serif;
 }
@@ -12,10 +14,10 @@ html,
 body {
   padding: 0;
   margin: 0;
+  color: var(--font-colour);
 }
 
 a {
-  color: inherit;
   text-decoration: none;
 }
 
@@ -23,8 +25,12 @@ a {
   box-sizing: border-box;
 }
 
+.information {
+  color: var(--information-font-colour);
+}
+
 .review-item {
-  background-color: #fa863d;
+  background-color: var(--f-background-colour);
   height: 500px;
   max-width: 700px;
   display: flex;
@@ -44,6 +50,19 @@ a {
   height: 48px;
   padding-left: 16px;
   padding-right: 16px;
+  font-weight: 600;
+  font-size: var(--medium-font-size);
+  border-bottom: var(--f-border);
+}
+
+.topbar-info {
+  flex: 2 1 0%;
+}
+
+.topbar-status {
+  color: var(--f-information-colour);
+  flex: 1 1 0%;
+  text-align: right;
 }
 
 .statusbar {
@@ -81,15 +100,16 @@ a {
   flex-basis: auto;
   flex-shrink: 0;
   position: relative;
+  border-top: var(--f-border);
 }
 
 .hidden-answer {
+  font-size: var(--smaller-font-size);
   width: 66.6%;
   flex: 2 1 0%;
   padding-left: 16px;
   overflow-x: scroll;
-  font-size: 14px;
-  transition: transform 0.2s;
+  transition: transform 0.15s;
 }
 
 .centre-stage {
@@ -100,7 +120,7 @@ a {
   on the container width */
   font-size: 22px;
   overflow-x: scroll;
-  transition: transform 0.25s;
+  transition: transform 0.2s;
 }
 
 .lowerbar {
@@ -119,11 +139,39 @@ a {
   width: 100%;
   background-color: #fa863d;
   border: none;
+  /* flex: 1 1 0%; */
+  border-top: var(--f-border);
+}
+
+button.prompt-button {
+  cursor: pointer;
+  color: var(--information-font-colour);
+  font-weight: 600;
+  font-size: var(--smaller-font-size);
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.button-info {
+  display: flex;
+  align-items: center;
+}
+
+.button-icon {
+  flex: 1 1 0%;
+  align-items: flex-start;
+}
+
+.button-text {
   flex: 1 1 0%;
 }
 
+.pb-left {
+  border-right: var(--f-border);
+}
+
 .prompt-button:hover {
-  background-color: rgb(244, 116, 47);
+  background-color: #f4742f;
 }
 
 .feedback-buttons {

@@ -1,3 +1,6 @@
+import Image from 'next/image'
+
+
 function postResponse(
     payload,
 ) {
@@ -34,16 +37,26 @@ export function Feedback({ promptID, onFeedback }) {
 
     return (
         <div className="lowerbar feedback-buttons">
-            <button className="prompt-button" onClick={() => {
+            <button className="prompt-button pb-left" onClick={() => {
                 dbPayload.remembered = false
                 postResponse(dbPayload)
                 onFeedback()
-            }}>Forgotten</button>
+            }}>
+                <div className='button-info'>
+                    <div className='button-text'>Forgotten</div>
+                    <Image className='button-icon' src="/x.svg" alt="Show answer icon" width={24} height={24} />
+                </div>
+            </button>
             <button className="prompt-button" onClick={() => {
                 dbPayload.remembered = true
                 postResponse(dbPayload)
                 onFeedback()
-            }}>Remembered</button>
+            }}>
+                <div className='button-info'>
+                    <div className='button-text'>Remembered</div>
+                    <Image className='button-icon' src="/check.svg" alt="Show answer icon" width={24} height={24} />
+                </div>
+            </button>
         </div >
     )
 }
