@@ -45,7 +45,7 @@ function handler(req, res) {
                             if (remembered) {
                                 nextDueDate = leitnerSchedule(result)
                             } else {
-                                nextDueDate = addDays(new Date(), 1)
+                                nextDueDate = addDays(new Date(), 0)
                             }
                             createUserPromptReview(normUserID, promptID, remembered, nextDueDate)
                             res.status(200).json(`Created prompt review record with user id ${normUserID} and prompt id ${promptID}. Next due date: ${nextDueDate}`)
