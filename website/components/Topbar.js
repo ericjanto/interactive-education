@@ -1,6 +1,6 @@
 import { UserStatus } from "./LoginStatus"
 
-export function Topbar({n, total, status}) {
+export function Topbar({ n, total, status }) {
     if (!n && n != 0) n = '?'
     if (!total) total = '?'
 
@@ -8,12 +8,14 @@ export function Topbar({n, total, status}) {
 
     switch (status) {
         case 1: statusText = 'Review what you just saw in the video.'
-        break
+            break
         case 2: statusText = 'Watch the video to activate questions.'
-        break
+            break
         case 3: statusText = 'All questions answered.'
-        break
+            break
+        default: statusText = 'Unexpected status for Topbar component'
     }
+
     return (
         <div className='topbar'>
             <div className="topbar-info information">{statusText}</div>
