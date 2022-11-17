@@ -1,12 +1,22 @@
-import { UserStatus } from "./LoginStatus";
+import { UserStatus } from "./LoginStatus"
 
-
-export function Topbar({n, total}) {
-    if (!n) n = '?'
+export function Topbar({n, total, status}) {
+    if (!n && n != 0) n = '?'
     if (!total) total = '?'
+
+    var statusText
+
+    switch (status) {
+        case 1: statusText = 'Review what you just saw in the video.'
+        break
+        case 2: statusText = 'Watch the video to activate questions.'
+        break
+        case 3: statusText = 'All questions answered.'
+        break
+    }
     return (
         <div className='topbar'>
-            <div className="topbar-info information">Review what you just saw in the video.</div>
+            <div className="topbar-info information">{statusText}</div>
             <div className="topbar-status">{n}/{total}</div>
             <UserStatus></UserStatus>
         </div>

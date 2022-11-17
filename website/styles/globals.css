@@ -1,3 +1,7 @@
+@import '@radix-ui/colors/blackA.css';
+@import '@radix-ui/colors/mauve.css';
+@import '@radix-ui/colors/violet.css';
+
 @import 'variables.css';
 
 :root, button {
@@ -31,7 +35,7 @@ a {
 
 .review-item {
   background-color: var(--f-background-colour);
-  height: 500px;
+  height: 452px;
   max-width: 700px;
   display: flex;
   flex-direction: column;
@@ -51,8 +55,10 @@ a {
   padding-left: 16px;
   padding-right: 16px;
   font-weight: 600;
+  max-width: 700px;
   font-size: var(--medium-font-size);
   border-bottom: var(--f-border);
+  background-color: var(--f-background-colour);
 }
 
 .topbar-info {
@@ -75,6 +81,11 @@ a {
   max-width: 132px;
   text-align: right;
 }
+
+/* .topbar-userstatus a {
+  text-decoration: underline;
+  color: inherit;
+} */
 
 .topbar a {
   text-decoration: underline;
@@ -196,8 +207,8 @@ button.prompt-button {
 
 .placeholder {
   background-color: var(--f-background-colour);
-  height: 500px;
-  max-width: 700px; 
+  height: 452px;
+  max-width: 700px;
 }
 
 .placeholder-icon {
@@ -205,4 +216,162 @@ button.prompt-button {
   margin-left: auto;
   margin-right: auto;
   align-self: center;
+}
+
+.dialog-overlay {
+  background-color: rgba(0, 0, 0, 0.51);
+  z-index: 2;
+  position: fixed;
+  inset: 0;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialog-content {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  position: fixed;
+  z-index: 999999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 450px;
+  max-height: 85vh;
+  padding: 25px;
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialog-content:focus {
+  outline: none;
+}
+
+.dialog-title {
+  margin: 0;
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.dialog-close-button {
+  all: unset;
+  font-family: inherit;
+  border-radius: 100%;
+  height: 25px;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(121, 42, 121);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.dialog-close-button:hover {
+  background-color: rgba(121, 42, 121, 0.273);
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.ScrollAreaRoot {
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  background-color: white;
+  --scrollbar-size: 10px;
+}
+
+.ScrollAreaViewport {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border-radius: inherit;
+}
+
+.ScrollAreaViewport>div>div {
+  padding: 0 !important;
+}
+
+.ScrollAreaScrollbar {
+  display: flex;
+  /* ensures no selection */
+  user-select: none;
+  /* disable browser handling of all panning and zooming gestures on touch devices */
+  touch-action: none;
+  padding: 2px;
+  /* background: var(--blackA6); */
+  transition: background 160ms ease-out;
+}
+
+.ScrollAreaScrollbar:hover {
+  background: var(--blackA8);
+}
+
+.ScrollAreaScrollbar[data-orientation='vertical'] {
+  width: var(--scrollbar-size);
+}
+
+.ScrollAreaScrollbar[data-orientation='horizontal'] {
+  flex-direction: column;
+  height: var(--scrollbar-size);
+}
+
+.ScrollAreaThumb {
+  flex: 1;
+  background: var(--mauve10);
+  border-radius: var(--scrollbar-size);
+  position: relative;
+}
+
+/* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
+.ScrollAreaThumb::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.ScrollAreaCorner {
+  background: var(--blackA8);
+}
+
+.Text {
+  color: var(--violet11);
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.Tag {
+  color: var(--mauve12);
+  font-size: 13px;
+  line-height: 18px;
+  margin-top: 15px;
+  border-top: 1px solid var(--mauve6);
+  padding-top: 10px;
 }

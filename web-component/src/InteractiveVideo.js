@@ -47,6 +47,18 @@ function extractGoToTimestamp(url) {
     }
 }
 
+function getContextName() {
+    let contextName
+    const meta = document.querySelector("meta[property='og:site_name']")
+    if (contextName) {
+        contextName = meta.getAttribute("content")
+    } else if (!contextName) {
+        const url = window.location.href
+        contextName = url.slice(url.indexOf('://')+3, url.lastIndexOf('/'))
+    }
+    return contextName
+}
+
 export class InteractiveVideo extends HTMLElement {
     #video = extractVideo(this)
     #interactiveElements = extractTimedInteractiveElements(this)
@@ -105,7 +117,6 @@ export class InteractiveVideo extends HTMLElement {
 
         const goToTimestamp = extractGoToTimestamp(window.location.href)
 
-
         // const interval = setInterval(() => {
         //     console.log(goToTimestamp)
         //     video.currentTime = goToTimestamp
@@ -131,7 +142,10 @@ export class InteractiveVideo extends HTMLElement {
             var now = Math.floor(this.currentTime).toString()
             if (times.includes(now)) {
                 video.pause()
-                video.controls = false
+                // Only disable controls if user didn't jump with context link
+                if (!window.location.href.includes('?t=')) {
+                    video.controls = false
+                }
                 iframe.scrollIntoView({ behavior: 'smooth' })
 
                 // Ensure that not in fullscreen
@@ -146,12 +160,15 @@ export class InteractiveVideo extends HTMLElement {
                 const contactUrl = window.location.href
                 const contextUrl = 'ContextURL not implemented yet'
 
+                const contextName = getContextName()
+
                 const payload = {
                     promptID: promptID,
                     contact: contactUrl,
                     sessionID: sessionID,
                     context: contextUrl,
                     timeStamp: now,
+                    contextName: contextName,
                 }
 
                 times.splice(times.indexOf(now), 1)
