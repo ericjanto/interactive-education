@@ -51,10 +51,10 @@ function getContextName() {
     let contextName
     const meta = document.querySelector("meta[property='og:site_name']")
     if (contextName) {
-        contextName = meta.getAttribute("content")
+        contextName = meta.getAttribute('content')
     } else if (!contextName) {
         const url = window.location.href
-        contextName = url.slice(url.indexOf('://')+3, url.lastIndexOf('/'))
+        contextName = url.slice(url.indexOf('://') + 3, url.lastIndexOf('/'))
     }
     return contextName
 }
@@ -117,18 +117,11 @@ export class InteractiveVideo extends HTMLElement {
 
         const goToTimestamp = extractGoToTimestamp(window.location.href)
 
-        // const interval = setInterval(() => {
-        //     console.log(goToTimestamp)
-        //     video.currentTime = goToTimestamp
-        // }, video.readyState === 4 ? null : 1000)
+        var iframeLoaded = false
+        iframe.onload = function () {
+            iframeLoaded = true
+        }
 
-        // video.addEventListener('loadeddata', () => {
-        //     if (video.readyState === 4) {
-        //         console.log('ho')
-        //         video.currentTime = goToTimestamp
-        //     }
-
-        // });
         var jumpedYet = false
 
         video.oncanplay = function () {
@@ -173,8 +166,19 @@ export class InteractiveVideo extends HTMLElement {
 
                 times.splice(times.indexOf(now), 1)
 
-                const iFWindow = iframe.contentWindow
-                iFWindow.postMessage(payload, iframe.src)
+                if (iframeLoaded) {
+                    const iFWindow = iframe.contentWindow
+                    iFWindow.postMessage(payload, iframe.src)
+                }
+
+                const interval = setInterval(() => {
+                    const iFWindow = iframe.contentWindow
+                    iFWindow.postMessage(payload, iframe.src)
+                }, 500)
+
+                if (iframeLoaded) {
+                    clearInterval(interval)
+                }
             }
         }
     }
