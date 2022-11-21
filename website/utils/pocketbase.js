@@ -17,7 +17,7 @@ export async function fetchUserPromptsReviews(userID) {
     const adminAuthData = await client.admins.authViaEmail('s1975761@ed.ac.uk', 'interactiveVideos')
     try {
         // TODO: this should probably not be limited to 50
-        return client.records.getList('prompt_reviews', 1, 50, {
+        return client.records.getList('prompt_reviews', 1, 400, {
             filter: `user = "${userID}"`,
         });
     } catch (error) {

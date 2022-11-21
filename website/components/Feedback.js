@@ -40,7 +40,7 @@ export function Feedback({ promptID, onFeedback }) {
             <button className="prompt-button pb-left" onClick={() => {
                 dbPayload.remembered = false
                 postResponse(dbPayload)
-                onFeedback()
+                onFeedback(false)
             }}>
                 <div className='button-info'>
                     <div className='button-text'>Forgotten</div>
@@ -50,7 +50,7 @@ export function Feedback({ promptID, onFeedback }) {
             <button className="prompt-button" onClick={() => {
                 dbPayload.remembered = true
                 postResponse(dbPayload)
-                onFeedback()
+                onFeedback(true)
             }}>
                 <div className='button-info'>
                     <div className='button-text'>Remembered</div>

@@ -19,7 +19,7 @@ const fetcher = async (url) => {
 export default function Deck({ promptsToReview }) {
     const [current, setCurrent] = useState([0, promptsToReview[0]])
 
-    function updateCurrent() {
+    function updateCurrent(remembered) {
         if (current[0] + 1 < promptsToReview.length) {
             setCurrent([current[0] + 1, promptsToReview[current[0] + 1]])
         } else {
