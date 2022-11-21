@@ -1,12 +1,8 @@
-import { UserStatus } from '../../components/LoginStatus'
 import { useRouter } from "next/router"
 import { useState } from "react"
 import useSWR from "swr"
 
 import ReviewItem from "../../components/ReviewItem"
-import { useUser } from "@auth0/nextjs-auth0"
-
-import { getNormalisedUserID } from "../../utils/lib"
 import { Topbar } from '../../components/Topbar'
 
 

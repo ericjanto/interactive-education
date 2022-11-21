@@ -13,7 +13,7 @@ const fetcher = async (url) => {
   return data
 }
 
-export default function Prompt({promptID}) {
+export default function Prompt({ promptID }) {
   const { data, error } = useSWR(
     () => promptID && `/api/prompts/${promptID}`,
     fetcher
@@ -26,7 +26,7 @@ export default function Prompt({promptID}) {
 
   return (
     <>
-      <Flashcard front={data.question} back={data.answer}></Flashcard>
+      <Flashcard front={data.question} back={data.answer} showQuestion={showQuestion} setShowQuestion={setShowQuestion}></Flashcard>
       <Feedback promptID={promptID}></Feedback>
     </>
   )

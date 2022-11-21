@@ -41,7 +41,6 @@ export function ContextDisplay({ promptID }) {
     if (data.items.length == 0) return <div>No context data available yet</div>
 
     const topTenContextLinks = getTopTenContextLinks(data.items)
-    console.log(topTenContextLinks)
 
     return (
         <>

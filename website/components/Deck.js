@@ -17,37 +17,59 @@ const fetcher = async (url) => {
 }
 
 export default function Deck({ promptsToReview }) {
-    const [current, setCurrent] = useState([0, promptsToReview[0]])
+    const [promptQueue, setPromptQueue] = useState(promptsToReview)
+    // const [current, setCurrent] = useState(promptsToReview[0])
 
-    function updateCurrent(remembered) {
-        if (current[0] + 1 < promptsToReview.length) {
-            setCurrent([current[0] + 1, promptsToReview[current[0] + 1]])
-        } else {
-            setCurrent([])
+    var promptContents = {}
+    promptsToReview.map(item => {
+        const { data, error } = useSWR(
+            () => `/api/prompts/${item}`,
+            fetcher
+        )
+
+        if (data) {
+            promptContents[data.id] = { question: data.question, answer: data.answer }
         }
+    })
+
+    const [showQuestion, setShowQuestion] = useState(true)
+
+    function updateQueue(remembered) {
+        if (remembered) {
+            setPromptQueue(promptQueue.slice(1))
+        } else {
+            const [first, ...rest] = promptQueue
+            setPromptQueue([...rest, first])
+        }
+        setShowQuestion(true)
     }
 
-    const { data, error } = useSWR(
-        () => current[1] && `/api/prompts/${current[1]}`,
-        fetcher
-    )
+    if (promptQueue.length == 0) return <div>All reviewed, check back later!</div>
+    if (!promptContents) {
+        return <div>Retrieving prompt contents...</div>
+    }
 
-    if (!current[1]) return <div>All reviewed, check back later!</div>
-    if (error) return <div>{error.message}</div>
-    if (!data) return <div>Retrieving data...</div>
-
-
+    const visiblePrompt = promptQueue[0]
 
     return (
         <>
             <div className="review-item">
                 <div className="topbar">
-                    <ContextDisplay promptID={current[1]}></ContextDisplay>
-                    <div className="topbar-status">{current[0] + 1}/{promptsToReview.length}</div>
+                    <ContextDisplay promptID={visiblePrompt}></ContextDisplay>
+                    <div className="topbar-status">{promptQueue.length} left</div>
                 </div>
                 <br />
-                <Flashcard front={data.question} back={data.answer}></Flashcard>
-                <Feedback promptID={current[1]} onFeedback={updateCurrent}></Feedback>
+                {visiblePrompt in promptContents ? (
+                    <>
+                        <Flashcard front={promptContents[visiblePrompt].question} back={promptContents[visiblePrompt].answer} showQuestion={showQuestion} setShowQuestion={setShowQuestion}></Flashcard>
+                        <Feedback promptID={visiblePrompt} onFeedback={updateQueue}></Feedback>
+                    </>
+                )
+                    : (
+                        <div className="placeholder">
+                        </div>
+                    )
+                }
             </div>
         </>
     )

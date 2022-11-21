@@ -7,9 +7,7 @@ import { useState } from 'react'
 
 import 'katex/dist/katex.min.css'
 
-export function Flashcard({ front, back }) {
-    const [showQuestion, setShowQuestion] = useState(true)
-
+export function Flashcard({ front, back, showQuestion, setShowQuestion }) {
     return (
         <>
             <div className='hidden-answer' style={!showQuestion ? { transform: 'translateY(0px)' } : { transform: 'translateY(10px)' }}>
