@@ -36,7 +36,7 @@ a {
 .review-item {
   background-color: var(--f-background-colour);
   height: 452px;
-  max-width: 700px;
+  max-width: 750px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -55,7 +55,7 @@ a {
   padding-left: 16px;
   padding-right: 16px;
   font-weight: 600;
-  max-width: 700px;
+  max-width: 750px;
   font-size: var(--medium-font-size);
   border-bottom: var(--f-border);
   background-color: var(--f-background-colour);
@@ -208,7 +208,7 @@ button.prompt-button {
 .placeholder {
   background-color: var(--f-background-colour);
   height: 452px;
-  max-width: 700px;
+  max-width: 750px;
 }
 
 .placeholder-icon {
