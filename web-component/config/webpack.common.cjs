@@ -5,7 +5,8 @@ const paths = require('./paths.cjs')
 
 module.exports = {
     entry: {
-        main: [paths.src + '/index.js']
+        main: [paths.src + '/index.js'],
+        host: { import: paths.src + '/index.js', filename: '../../website/public/interactive-video-component.js' }
     },
     output: {
         path: paths.build,
