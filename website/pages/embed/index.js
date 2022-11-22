@@ -67,31 +67,27 @@ export default function Embed() {
     const [sessionID, setSessionID] = useState()
     const [videoTimeStamp, setTimeStamp] = useState()
     const [contextName, setContextName] = useState()
-    
+
     const [queryRank, setQueryRank] = useState(0)
+
+    const { data, error } = useSWR(
+        () => query.prompts && `/api/promptscontents/${query.prompts.join('/')}`,
+        fetcher
+    )
 
     // TODO: can you show error message if not embedded but called as parent window?
     if (!query.prompts) {
         return <div>Please provide valid query prompts in the URL</div>
     }
 
-    // {prompt id: {front, back}}
-    var promptContents = {}
-    query.prompts.map(item => {
-        const { data, error } = useSWR(
-            () => `/api/prompts/${item}`,
-            fetcher
-        )
-
-        if (data) {
-            promptContents[item] = { question: data.question, answer: data.answer }
-        }
-    })
+    let promptContents
+    if (data) {
+        promptContents = data
+    }
 
     if (typeof window !== "undefined") {
         window.addEventListener("message", (event) => {
             const recPayload = event.data
-            // console.log('received payload: ', recPayload)
             setContactAddress(recPayload.contact)
             setSessionID(recPayload.sessionID)
             setVisiblePrompt(recPayload.promptID)
@@ -122,7 +118,6 @@ export default function Embed() {
 
     return (
         <>
-            {/* <UserStatus></UserStatus> */}
             <Topbar n={queryRank} total={totalPrompts} status={status}></Topbar>
             {visiblePrompt in promptContents ? (
                     <ReviewItem promptID={visiblePrompt}

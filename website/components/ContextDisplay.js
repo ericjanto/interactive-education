@@ -67,8 +67,8 @@ export function ContextDisplay({ promptID }) {
                                 <div style={{ padding: '15px 20px' }}>
                                     <div className="Text">Links</div>
                                     {topTenContextLinks.map((element) => (
-                                        <div className='Tag'>
-                                            <a href={element[1]} target='_blank'>{element[0]}↗</a>
+                                        <div className='Tag' key={element[1]}>
+                                            <a href={element[1]} target='_blank' rel='noreferrer'>{element[0]}↗</a>
                                         </div>
                                     ))}
                                 </div>

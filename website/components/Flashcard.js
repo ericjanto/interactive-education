@@ -3,33 +3,31 @@ import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 
-import { useState } from 'react'
-
 import 'katex/dist/katex.min.css'
 
 export function Flashcard({ front, back, showQuestion, setShowQuestion }) {
     return (
         <>
             <div className='hidden-answer' style={!showQuestion ? { transform: 'translateY(0px)' } : { transform: 'translateY(10px)' }}>
-                {!showQuestion ? <ReactMarkdown
-                    children={front}
-                    remarkPlugins={[remarkMath]}
-                    rehypePlugins={[rehypeKatex]}
-                /> : <></>}
+                {!showQuestion ?
+                    <ReactMarkdown
+                        remarkPlugins={[remarkMath]}
+                        rehypePlugins={[rehypeKatex]}
+                    >{front}</ReactMarkdown>
+                    :
+                    <></>}
             </div>
             <div className='centre-stage' style={!showQuestion ? { transform: 'translateY(0px)' } : { transform: 'translateY(10px)' }}>
                 {
                     showQuestion ?
                         <ReactMarkdown
-                            children={front}
                             remarkPlugins={[remarkMath]}
                             rehypePlugins={[rehypeKatex]}
-                        /> :
+                        >{front}</ReactMarkdown> :
                         <ReactMarkdown
-                            children={back}
                             remarkPlugins={[remarkMath]}
                             rehypePlugins={[rehypeKatex]}
-                        />
+                        >{back}</ReactMarkdown>
                 }
             </div>
             {

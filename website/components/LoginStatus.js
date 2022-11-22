@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { useInterval } from 'usehooks-ts'
-import Link from 'next/link'
-import Image from 'next/image'
 
 // TODO: change this to an api endpoint which returns whether user is authenticated
 function fetchAndSetUser(setUser) {
@@ -41,13 +39,13 @@ export function UserStatus() {
             {user ?
                 <div>
                     {`Answers are saved to `}
-                    <a target='_blank' href='http://localhost:3000/'>RemWatch</a>
+                    <a target='_blank' href='http://localhost:3000/' rel="noreferrer">RemWatch</a>
                 </div>
                 :
                 <div>
-                    <a target='_blank' href='/api/auth/login'>Login</a>
+                    <a target='_blank' href='/api/auth/login' rel="noreferrer">Login</a>
                     {` to save answers to `}
-                    <a target='_blank' href='http://localhost:3000/'>RemWatch</a>
+                    <a target='_blank' href='http://localhost:3000/' rel="noreferrer">RemWatch</a>
                 </div>
             }
         </div>

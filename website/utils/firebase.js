@@ -41,7 +41,7 @@ export async function fetchMultiplePrompts(promptIDs) {
     const querySnapshot = await getDocs(q);
     const docData = {}
     querySnapshot.forEach((doc) => {
-        docData[doc.id] = doc.data
+        docData[doc.id] = doc.data()
     })
     return docData
 }
