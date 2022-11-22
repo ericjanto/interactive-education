@@ -7,7 +7,7 @@
 // ========================================================================
 
 import { initializeApp } from 'firebase/app';
-import { doc, getDoc, getFirestore, collection, query, where, getDocs, Timestamp, addDoc, orderBy } from "firebase/firestore";
+import { doc, getDoc, getFirestore, collection, query, where, getDocs, Timestamp, addDoc, documentId } from "firebase/firestore";
 
 
 const firebaseConfig = {
@@ -34,6 +34,16 @@ export async function fetchPrompt(promptID) {
     } else {
         return null
     }
+}
+
+export async function fetchMultiplePrompts(promptIDs) {
+    const q = query(promptsCollectionRef, where(documentId(), 'in', promptIDs))
+    const querySnapshot = await getDocs(q);
+    const docData = {}
+    querySnapshot.forEach((doc) => {
+        docData[doc.id] = doc.data
+    })
+    return docData
 }
 
 export async function fetchUserPromptsReviews(userID) {
