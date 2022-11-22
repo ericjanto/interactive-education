@@ -20,7 +20,9 @@ function generateSessionID(len) {
 
 function composeURL(promptIDs) {
     const query = promptIDs.join('&prompts=')
-    return `http://localhost:3000/embed?prompts=${query}`
+    // TODO: production vs dev paths
+    // return `http://localhost:3000/embed?prompts=${query}`
+    return `https://interactive-education.vercel.app/embed?prompts=${query}`
 }
 
 function getHeightForReviewAreaOfWidth(width) {
