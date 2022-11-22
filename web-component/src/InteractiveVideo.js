@@ -1,11 +1,11 @@
-import { InteractiveElement } from './InteractiveElement'
+// import { InteractiveElement } from './InteractiveElement'
 import { extractVideo, extractPromptIDs, extractTimedInteractiveElements } from './utils'
 
-function renderInteractiveElement(parent, interactiveElement) {
-    // Could just have a single iframe element where I change
-    // the src and if src set, display, otherwise don't display
-    const shadowRoot = parent.attachShadow({ mode: 'closed' })
-}
+// function renderInteractiveElement(parent, interactiveElement) {
+//     // Could just have a single iframe element where I change
+//     // the src and if src set, display, otherwise don't display
+//     const shadowRoot = parent.attachShadow({ mode: 'closed' })
+// }
 
 // To avoid stop sends from other flashcards to interfere with this session
 function dec2hex(dec) {
@@ -13,7 +13,7 @@ function dec2hex(dec) {
 }
 
 function generateSessionID(len) {
-    var arr = new Uint8Array((len || 40) / 2)
+    const arr = new Uint8Array((len || 40) / 2)
     window.crypto.getRandomValues(arr)
     return Array.from(arr, dec2hex).join('')
 }
@@ -117,12 +117,12 @@ export class InteractiveVideo extends HTMLElement {
 
         const goToTimestamp = extractGoToTimestamp(window.location.href)
 
-        var iframeLoaded = false
+        let iframeLoaded = false
         iframe.onload = function () {
             iframeLoaded = true
         }
 
-        var jumpedYet = false
+        let jumpedYet = false
 
         video.oncanplay = function () {
             if (goToTimestamp && !jumpedYet) {
@@ -132,7 +132,7 @@ export class InteractiveVideo extends HTMLElement {
         }
 
         video.ontimeupdate = function () {
-            var now = Math.floor(this.currentTime).toString()
+            let now = Math.floor(this.currentTime).toString()
             if (times.includes(now)) {
                 video.pause()
                 // Only disable controls if user didn't jump with context link
@@ -145,7 +145,7 @@ export class InteractiveVideo extends HTMLElement {
                 try {
                     window.document.exitFullscreen()
                 } catch (error) {
-                    console.error(error)
+                    console.log(error)
                 }
 
                 const promptID = interactiveElements[now].id
