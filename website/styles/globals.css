@@ -35,7 +35,7 @@ a {
 
 .review-item {
   background-color: var(--f-background-colour);
-  height: 452px;
+  height: 400px;
   max-width: 750px;
   display: flex;
   flex-direction: column;
@@ -207,7 +207,7 @@ button.prompt-button {
 
 .placeholder {
   background-color: var(--f-background-colour);
-  height: 452px;
+  height: 400px;
   max-width: 750px;
 }
 
