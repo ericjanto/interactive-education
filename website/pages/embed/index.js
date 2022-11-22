@@ -76,7 +76,7 @@ export default function Embed() {
         )
 
         if (data) {
-            promptContents[data.id] = { question: data.question, answer: data.answer }
+            promptContents[item] = { question: data.question, answer: data.answer }
         }
     })
 

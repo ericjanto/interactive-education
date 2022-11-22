@@ -19,18 +19,21 @@ const fetcher = async (url) => {
 export default function Deck({ promptsToReview }) {
     const [promptQueue, setPromptQueue] = useState(promptsToReview)
     // const [current, setCurrent] = useState(promptsToReview[0])
+    // console.log(promptsToReview)
 
     var promptContents = {}
-    promptsToReview.map(item => {
-        const { data, error } = useSWR(
-            () => `/api/prompts/${item}`,
-            fetcher
-        )
-
-        if (data) {
-            promptContents[data.id] = { question: data.question, answer: data.answer }
-        }
-    })
+    if (promptsToReview.length > 0) {
+        promptsToReview.map(item => {
+            const { data, error } = useSWR(
+                () => `/api/prompts/${item}`,
+                fetcher
+            )
+    
+            if (data) {
+                promptContents[item] = { question: data.question, answer: data.answer }
+            }
+        })
+    }
 
     const [showQuestion, setShowQuestion] = useState(true)
 
@@ -44,7 +47,7 @@ export default function Deck({ promptsToReview }) {
         setShowQuestion(true)
     }
 
-    if (promptQueue.length == 0) return <div>All reviewed, check back later!</div>
+    if (promptQueue.length == 0 || Object.keys(promptQueue).length == 0) return <div>All reviewed, check back later!</div>
     if (!promptContents) {
         return <div>Retrieving prompt contents...</div>
     }

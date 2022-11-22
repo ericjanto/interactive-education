@@ -1,4 +1,4 @@
-import { fetchPrompt } from "../../../utils/pocketbase"
+import { fetchPrompt } from "../../../utils/firebase"
 
 export default function handler(req, res) {
     const {
@@ -11,10 +11,14 @@ export default function handler(req, res) {
             const dbRes = fetchPrompt(promptID)
             dbRes.then(
                 (result) => {
-                    res.status(200).json(result)
+                    if (result) {
+                        res.status(200).json(result)
+                    } else {
+                        res.status(404).json(`Prompt with id ${promptID} not found.`)
+                    }
                 },
                 (error) => {
-                    res.status(404).json(`Prompt with id ${promptID} not found.`)
+                    res.status(404).json(`Prompt with id ${promptID} not found. ${error}`)
                 })
             break
         case 'PUT':

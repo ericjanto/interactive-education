@@ -23,15 +23,18 @@ export function addDays(date, days) {
 }
 
 export function getDueReviewPrompts(reviewHistory) {
+    if (!reviewHistory || reviewHistory.length == 0) {
+        return {}
+    }
     const now = new Date()
 
     // entries which have date before or equal to now
     // {prompt_id:next_due_date}
     let promptDict = {}
-    for (var i = 0; i < reviewHistory.items.length; i++) {
-        let reviewRecord = reviewHistory.items.at(i)
-        const promptID = reviewRecord.prompt_id
-        const dueDate = new Date(reviewRecord.calculated_next_due)
+    for (var i = 0; i < reviewHistory.length; i++) {
+        let reviewRecord = reviewHistory[i]
+        const promptID = reviewRecord.promptID
+        const dueDate = reviewRecord.calculatedNextDue.toDate()
         if (promptID in promptDict) {
             if (promptDict[promptID] < dueDate) {
                 promptDict[promptID] = dueDate

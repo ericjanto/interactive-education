@@ -50,9 +50,9 @@ function extractGoToTimestamp(url) {
 function getContextName() {
     let contextName
     const meta = document.querySelector("meta[property='og:site_name']")
-    if (contextName) {
+    if (meta) {
         contextName = meta.getAttribute('content')
-    } else if (!contextName) {
+    } else {
         const url = window.location.href
         contextName = url.slice(url.indexOf('://') + 3, url.lastIndexOf('/'))
     }

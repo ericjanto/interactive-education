@@ -1,5 +1,5 @@
 import { getNormalisedUserID } from '../../../utils/lib'
-import { createPromptContext, fetchSameContext, fetchUserSpecificPromptContexts } from "../../../utils/pocketbase"
+import { createPromptContext, fetchSameContext, fetchUserSpecificPromptContexts } from '../../../utils/firebase'
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0"
 
 export function handler(req, res) {
@@ -31,9 +31,9 @@ export function handler(req, res) {
             dbRes2.then(
                 (result) => {
                     // res.status(409).json(`This record already exists. Preventing POST to avoid conflict.`)
-                    if (result.items.length == 0) {
-                        res.status(200).json(`Context record successfully created.`)
+                    if (result.length == 0) {
                         createPromptContext(normUserID, promptID, contextLink, linkName)
+                        res.status(200).json(`Context record successfully created.`)
                     } else {
                         res.status(409).json(`Context record already present, aborted POST to prevent conflict.`)
                     }

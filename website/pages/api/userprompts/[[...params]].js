@@ -1,6 +1,5 @@
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0"
-
-import { createUserPromptReview, fetchPrompt, fetchUserPromptsReviews, fetchUserSpecificPromptReviews } from "../../../utils/pocketbase"
+import { createUserPromptReview, fetchPrompt, fetchUserPromptsReviews, fetchUserSpecificPromptReviews } from "../../../utils/firebase";
 import { addDays, daysBetweenDates, getNormalisedUserID } from "../../../utils/lib"
 import { leitnerSchedule } from "../../../utils/scheduler";
 
@@ -27,37 +26,32 @@ function handler(req, res) {
         case 'POST':
             const promptID = body.promptID
             const remembered = body.remembered
-            if (fetchPrompt(promptID)) {
-                fetchUserSpecificPromptReviews(normUserID, promptID).then(
-                    (result) => {
-                        var sendFeedback = true
-                        if (result.totalItems >= 1) {
-                            const due_date = new Date(result.items.at(0).calculated_next_due)
-                            const now = new Date()
-                            const daydiff = daysBetweenDates(now, due_date)
-                            if (daydiff > 0) {
-                                sendFeedback = false
-                                res.status(409).json(`Did not send feedback since review date is scheduled in future: ${due_date}`)
-                            }
-                        } 
-                        if (sendFeedback) {
-                            var nextDueDate = null
-                            if (remembered) {
-                                nextDueDate = leitnerSchedule(result)
-                            } else {
-                                nextDueDate = addDays(new Date(), 0)
-                            }
-                            createUserPromptReview(normUserID, promptID, remembered, nextDueDate)
-                            res.status(200).json(`Created prompt review record with user id ${normUserID} and prompt id ${promptID}. Next due date: ${nextDueDate}`)
+            fetchUserSpecificPromptReviews(normUserID, promptID).then(
+                (result) => {
+                    var sendFeedback = true
+                    if (result.length >= 1) {
+                        const due_date = new Date(result[0].calculatedNextDue.toDate())
+                        const now = new Date()
+                        const daydiff = daysBetweenDates(now, due_date)
+                        if (daydiff > 0) {
+                            sendFeedback = false
+                            res.status(409).json(`Did not send feedback since review date is scheduled in future: ${due_date}`)
                         }
-                    },
-                    (error) => {
-                        res.status(404).json(`No data found for user with ID ${normUserID}. ${error}`)
-                    })
-                break
-            } else {
-                res.status(404).json(`An error occured when trying to write a prompt review record.`)
-            }
+                    }
+                    if (sendFeedback) {
+                        var nextDueDate = null
+                        if (remembered) {
+                            nextDueDate = leitnerSchedule(result)
+                        } else {
+                            nextDueDate = addDays(new Date(), 0)
+                        }
+                        createUserPromptReview(normUserID, promptID, remembered, nextDueDate)
+                        res.status(200).json(`Created prompt review record with user id ${normUserID} and prompt id ${promptID}. Next due date: ${nextDueDate}`)
+                    }
+                },
+                (error) => {
+                    res.status(404).json(`No data found for user with ID ${normUserID}. ${error}`)
+            })
             break
         default:
             res.setHeader('Allow', ['GET', 'POST'])

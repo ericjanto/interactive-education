@@ -22,7 +22,7 @@ function getTopTenContextLinks(items) {
         if (i > 10) {
             break
         } else {
-            links.push([items[i].link_name,items[i].context_link])
+            links.push([items[i].linkName,items[i].contextLink])
         }
     }
     return links
@@ -34,13 +34,13 @@ export function ContextDisplay({ promptID }) {
         fetcher
     )
 
-    if (!data) return <div>Fetching context data</div>
+    if (!data) return <div>Fetching context data...</div>
     if (error) return <div>{error}</div>
 
 
-    if (data.items.length == 0) return <div>No context data available yet</div>
+    if (data.length == 0) return <div>No context data available yet</div>
 
-    const topTenContextLinks = getTopTenContextLinks(data.items)
+    const topTenContextLinks = getTopTenContextLinks(data)
 
     return (
         <>

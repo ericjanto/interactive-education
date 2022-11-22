@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Deck from '../components/Deck'
 
 import { getDueReviewPrompts, getNormalisedUserID } from '../utils/lib'
-import { fetchUserPromptsReviews } from '../utils/pocketbase'
+import { fetchUserPromptsReviews } from '../utils/firebase'
 
 const fetcher = async (url) => {
     const res = await fetch(url)
@@ -21,6 +21,7 @@ export default function Review({ user }) {
     const [fetched, setFetched] = useState(false)
 
     // TODO: this only shows 50 reviews at most
+    // TODO: useSWR
     if (!fetched) {
         const dbRes = fetchUserPromptsReviews(getNormalisedUserID(user.sub))
         dbRes.then(
@@ -33,7 +34,7 @@ export default function Review({ user }) {
     return (
         <>
             <h1>Review page</h1>
-            {promptsToReview ? <Deck promptsToReview={promptsToReview}></Deck> : "Retrieving prompt to review..."}
+            {promptsToReview ? <Deck promptsToReview={promptsToReview}></Deck> : "Checking prompts to review..."}
         </>
     )
 }
