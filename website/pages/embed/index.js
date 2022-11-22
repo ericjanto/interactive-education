@@ -62,6 +62,14 @@ function saveContext(promptID, contactAddress, videoTimeStamp, contextName) {
 export default function Embed() {
     const { query } = useRouter()
 
+    const [contactAddress, setContactAddress] = useState()
+    const [visiblePrompt, setVisiblePrompt] = useState()
+    const [sessionID, setSessionID] = useState()
+    const [videoTimeStamp, setTimeStamp] = useState()
+    const [contextName, setContextName] = useState()
+    
+    const [queryRank, setQueryRank] = useState(0)
+
     // TODO: can you show error message if not embedded but called as parent window?
     if (!query.prompts) {
         return <div>Please provide valid query prompts in the URL</div>
@@ -79,13 +87,6 @@ export default function Embed() {
             promptContents[item] = { question: data.question, answer: data.answer }
         }
     })
-
-
-    const [contactAddress, setContactAddress] = useState()
-    const [visiblePrompt, setVisiblePrompt] = useState()
-    const [sessionID, setSessionID] = useState()
-    const [videoTimeStamp, setTimeStamp] = useState()
-    const [contextName, setContextName] = useState()
 
     if (typeof window !== "undefined") {
         window.addEventListener("message", (event) => {
@@ -115,8 +116,6 @@ export default function Embed() {
         }
     }
 
-
-    const [queryRank, setQueryRank] = useState(0)
     const totalPrompts = Object.keys(promptContents).length
 
     const status = visiblePrompt in promptContents ? 1 : (queryRank < totalPrompts || totalPrompts == 0 ? 2 : 3)
