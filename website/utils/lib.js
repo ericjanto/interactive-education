@@ -77,8 +77,9 @@ export function sessionCookieExists() {
     d.setTime(d.getTime() + (10000));
     var expires = d;
 
+    console.log('trying with setCookie')
     setCookie(cookiename, 'new_value', {expires: expires})
 
-    document.cookie = cookiename + "=new_value;path=/;" + expires
+    // document.cookie = cookiename + "=new_value;path=/;" + expires
     return document.cookie.indexOf(cookiename + '=') == -1;
 }
