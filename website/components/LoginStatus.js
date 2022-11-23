@@ -7,6 +7,8 @@ import { getBaseUrl, sessionCookieExists } from '../utils/lib'
 // if existent --> assume logged in
 // TODO: in above case, check that you can successfully post messages
 function validateUser(setUser) {
+    console.log('checking user status')
+    console.log('>>>', sessionCookieExists())
     if (sessionCookieExists()) {
         setUser('validated')
     } else {
