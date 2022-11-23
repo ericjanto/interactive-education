@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useInterval } from 'usehooks-ts'
-import { getBaseUrl } from '../utils/lib';
+import { getBaseUrl } from '../utils/lib'
 
 // TODO: change this to an api endpoint which returns whether user is authenticated
 function fetchAndSetUser(setUser) {
