@@ -73,7 +73,7 @@ export function sessionCookieExists() {
     // cookie is valid!
     const cookiename = 'appSession'
     var d = new Date();
-    d.setTime(d.getTime() + (1000));
+    d.setTime(d.getTime() + (10000));
     var expires = "expires=" + d.toUTCString();
 
     document.cookie = cookiename + "=new_value;path=/;" + expires
