@@ -39,17 +39,13 @@ export function UserStatus() {
             {user ?
                 <div>
                     {`Answers are saved to `}
-                    {/* TODO: production vs dev paths. might be able to just use '/'? */}
-                    {/* <a target='_blank' href='http://localhost:3000/' rel="noreferrer">RemWatch</a> */}
-                    <a target='_blank' href='https://interactive-education.vercel.app/' rel="noreferrer">RemWatch</a>
+                    <a target='_blank' href='' rel="noreferrer">RemWatch</a>
                 </div>
                 :
                 <div>
                     <a target='_blank' href='/api/auth/login' rel="noreferrer">Login</a>
                     {` to save answers to `}
-                    {/* TODO: production vs dev paths */}
-                    {/* <a target='_blank' href='http://localhost:3000/' rel="noreferrer">RemWatch</a> */}
-                    <a target='_blank' href='https://interactive-education.vercel.app/' rel="noreferrer">RemWatch</a>
+                    <a target='_blank' href='' rel="noreferrer">RemWatch</a>
                 </div>
             }
         </div>
