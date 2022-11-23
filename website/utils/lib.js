@@ -64,3 +64,18 @@ export function getBaseUrl() {
         return 'https://interactive-education.vercel.app/'
     }
 }
+
+export function sessionCookieExists() {
+    // Determines whether appSession (httpOnly) cookie exists
+    // by trying to override it.
+    
+    // Does not determine whether the session
+    // cookie is valid!
+    const cookiename = 'appSession'
+    var d = new Date();
+    d.setTime(d.getTime() + (1000));
+    var expires = "expires=" + d.toUTCString();
+
+    document.cookie = cookiename + "=new_value;path=/;" + expires
+    return document.cookie.indexOf(cookiename + '=') == -1;
+}

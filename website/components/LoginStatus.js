@@ -1,21 +1,17 @@
 import { useState } from 'react';
 import { useInterval } from 'usehooks-ts'
-import { getBaseUrl } from '../utils/lib'
+import { getBaseUrl, sessionCookieExists } from '../utils/lib'
 
-// TODO: change this to an api endpoint which returns whether user is authenticated
-function fetchAndSetUser(setUser) {
-    const url = `/api/auth/me`
-
-    const response = fetch(url);
-    response.then((r) => {
-        r.json().then((res) => {
-            if (res.error == 'not_authenticated') {
-                setUser(null)
-            } else {
-                setUser(res.nickname)
-            }
-        })
-    })
+// TODO: This doesn't work on hosted version, for some reason. Something to investigate.
+// maybe check if appSession cookie is existent instead?
+// if existent --> assume logged in
+// TODO: in above case, check that you can successfully post messages
+function validateUser(setUser) {
+    if (sessionCookieExists()) {
+        setUser('validated')
+    } else {
+        setUser(null)
+    }
 };
 
 export function UserStatus() {
@@ -23,7 +19,7 @@ export function UserStatus() {
 
     useInterval(
         () => {
-            fetchAndSetUser(setUser)
+            validateUser(setUser)
         },
         1500
     )
@@ -35,7 +31,6 @@ export function UserStatus() {
     }
 
     const baseURL = getBaseUrl()
-    console.log(baseURL)
 
     return (
         // TODO: switch(user)
