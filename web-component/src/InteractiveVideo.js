@@ -20,9 +20,9 @@ function generateSessionID(len) {
 
 function composeURL(promptIDs) {
     const query = promptIDs.join('&prompts=')
-    // TODO: production vs dev paths
-    // return `http://localhost:3000/embed?prompts=${query}`
-    return `https://interactive-education.vercel.app/embed?prompts=${query}`
+
+    // API_URL gets injected by webpack at compile-time
+    return `${API_URL}/embed?prompts=${query}` // eslint-disable-line no-undef
 }
 
 function getHeightForReviewAreaOfWidth(width) {

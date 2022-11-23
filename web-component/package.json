@@ -28,5 +28,7 @@
     "webpack-dev-server": "^4.11.1",
     "webpack-merge": "^5.8.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "process": "^0.11.10"
+  }
 }

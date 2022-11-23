@@ -1,7 +1,11 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { DefinePlugin } = require('webpack');
+const process = require("process");
 
 const paths = require('./paths.cjs')
+
+const isDevelopment = process.env.NODE_ENV === "development";
 
 module.exports = {
     entry: {
@@ -18,6 +22,13 @@ module.exports = {
             title: 'Interactive Web Component Test Page',
             template: paths.src + '/template.html',
             filename: 'index.html',
+        }),
+        new DefinePlugin({
+            API_URL: JSON.stringify(
+                isDevelopment
+                  ? "http://localhost:3000"
+                  : "https://interactive-education.vercel.app/",
+              ),
         }),
     ],
     module: {
