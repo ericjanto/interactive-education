@@ -9,6 +9,8 @@ import { getBaseUrl, sessionCookieExists } from '../utils/lib'
 function validateUser(setUser) {
     console.log('checking user status')
     console.log('>>>', sessionCookieExists())
+    // appSession cookie with new_value is not created in hosted version,
+    // so below always returns true
     if (sessionCookieExists()) {
         setUser('validated')
     } else {
@@ -19,7 +21,13 @@ function validateUser(setUser) {
 export function UserStatus() {
     const [user, setUser] = useState('fetching')
 
-    console.log('hello? :(')
+    const cookiename = 'testCookie'
+    var d = new Date();
+    d.setTime(d.getTime() + (1000));
+    var expires = "expires=" + d.toUTCString();
+
+    document.cookie = cookiename + "=new_value;path=/;" + expires
+
     useInterval(
         () => {
             validateUser(setUser)
@@ -27,8 +35,6 @@ export function UserStatus() {
         1500
     )
 
-    // no user --> red dot and refetch
-    // user --> green dot
     if (user == 'fetching') {
         return <div className='topbar-userstatus'>Checking user...</div>
     }
