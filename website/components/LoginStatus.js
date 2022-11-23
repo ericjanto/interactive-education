@@ -35,6 +35,7 @@ export function UserStatus() {
     }
 
     const baseURL = getBaseUrl()
+    console.log(baseURL)
 
     return (
         // TODO: switch(user)
