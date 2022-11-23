@@ -1,4 +1,5 @@
 import process from 'process'
+import {setCookie} from 'cookies-next'
 
 export function getNormalisedUserID(userID) {
     return userID.replace('auth0|', '')
@@ -74,7 +75,9 @@ export function sessionCookieExists() {
     const cookiename = 'appSession'
     var d = new Date();
     d.setTime(d.getTime() + (10000));
-    var expires = "expires=" + d.toUTCString();
+    var expires = d;
+
+    setCookie(cookiename, 'new_value', {expires: expires})
 
     document.cookie = cookiename + "=new_value;path=/;" + expires
     return document.cookie.indexOf(cookiename + '=') == -1;
