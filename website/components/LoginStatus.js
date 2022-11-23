@@ -19,6 +19,7 @@ function validateUser(setUser) {
 export function UserStatus() {
     const [user, setUser] = useState('fetching')
 
+    console.log('hello? :(')
     useInterval(
         () => {
             validateUser(setUser)
