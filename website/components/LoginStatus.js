@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useInterval } from 'usehooks-ts'
+import { getBaseUrl } from '../utils/lib';
 
 // TODO: change this to an api endpoint which returns whether user is authenticated
 function fetchAndSetUser(setUser) {
@@ -33,19 +34,21 @@ export function UserStatus() {
         return <div className='topbar-userstatus'>Checking user...</div>
     }
 
+    const baseURL = getBaseUrl()
+
     return (
         // TODO: switch(user)
         <div className='topbar-userstatus'>
             {user ?
                 <div>
                     {`Answers are saved to `}
-                    <a target='_blank' href='' rel="noreferrer">RemWatch</a>
+                    <a target='_blank' href={baseURL} rel="noreferrer">RemWatch</a>
                 </div>
                 :
                 <div>
                     <a target='_blank' href='/api/auth/login' rel="noreferrer">Login</a>
                     {` to save answers to `}
-                    <a target='_blank' href='' rel="noreferrer">RemWatch</a>
+                    <a target='_blank' href={baseURL} rel="noreferrer">RemWatch</a>
                 </div>
             }
         </div>
