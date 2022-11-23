@@ -59,6 +59,13 @@ function saveContext(promptID, contactAddress, videoTimeStamp, contextName) {
     })
 }
 
+function determinePromptCount(query) {
+    const promptIDs = query.prompts
+    // TODO: what if invalid id? maybe check with promptContents, and
+    // where promptContents are fetched, check validity there?
+    return promptIDs.length
+}
+
 export default function Embed() {
     const { query } = useRouter()
 
@@ -112,7 +119,7 @@ export default function Embed() {
         }
     }
 
-    const totalPrompts = Object.keys(promptContents).length
+    const totalPrompts = determinePromptCount(query)
 
     const status = visiblePrompt in promptContents ? 1 : (queryRank < totalPrompts || totalPrompts == 0 ? 2 : 3)
 
@@ -120,12 +127,12 @@ export default function Embed() {
         <>
             <Topbar n={queryRank} total={totalPrompts} status={status}></Topbar>
             {visiblePrompt in promptContents ? (
-                    <ReviewItem promptID={visiblePrompt}
-                        front={promptContents[visiblePrompt].question}
-                        back={promptContents[visiblePrompt].answer}
-                        n={queryRank}
-                        total={totalPrompts}
-                        onFeedback={onFeedback}></ReviewItem>
+                <ReviewItem promptID={visiblePrompt}
+                    front={promptContents[visiblePrompt].question}
+                    back={promptContents[visiblePrompt].answer}
+                    n={queryRank}
+                    total={totalPrompts}
+                    onFeedback={onFeedback}></ReviewItem>
             )
                 :
                 (
