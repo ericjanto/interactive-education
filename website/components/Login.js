@@ -20,7 +20,7 @@ export function Login() {
             )
                 : (
                     <p>
-                        <a target='_blank' href='/api/auth/login'>Login to save progress</a>
+                        <a target='_blank' href='/api/auth/login'>Login</a>
                     </p>
                 )}
         </>
