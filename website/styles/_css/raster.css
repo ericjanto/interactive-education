@@ -9,7 +9,7 @@ Variables
     Font size is the basis of all other measurements.
     It's either constant or viewport-relative. Choose one.
     Constant: */
-    --fontSize: 16px;
+    --fontSize2: 16px;
     /*
     Veiwport-relative (100% / EMs-across-viewport) */
     /* --fontSize: calc(100vw / 80); */
@@ -22,7 +22,7 @@ Variables
     --monoFont: "iaw-mono";  /* "IBM Plex Mono" */
   
     /* line height is the basis for vertical spacing */
-    --lineHeight: calc(var(--fontSize) * 1.5);
+    --lineHeight: calc(var(--fontSize2) * 1.5);
   
     /* horizontal and vertical spacing basis */
     --baseline: calc(var(--lineHeight) / 2);
@@ -549,7 +549,7 @@ Variables
   /* document */
   html {
     font-family: var(--sansFont), -system-ui, system-ui, sans-serif;
-    font-size:   var(--fontSize);
+    font-size:   var(--fontSize2);
     line-height: var(--lineHeight);
     background:  var(--background-color);
     color:       var(--foreground-color);
