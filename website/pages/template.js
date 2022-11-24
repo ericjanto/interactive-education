@@ -17,11 +17,14 @@ export default function Template() {
                 <meta property="og:site_name" content="Website Template for Interactive Video" />
             </Head>
             <h1>Website Template for Interactive Video</h1>
+            <br/>
             <p>
                 This is a template which shows how to make an interactive video...
                 Here could be some introductory content about the video.
             </p>
+            <br/>
             <blockquote>Test blockquote</blockquote>
+            <br/>
             <p>
                 Anim ipsum ullamco et ipsum
                 proident cillum irure dolor veniam velit.
@@ -33,6 +36,7 @@ export default function Template() {
                 amet nisi. Quis magna Lorem nulla ut consectetur ad non proident labore nostrud eu mollit. Exercitation ad ex
                 labore nulla ullamco incididunt nulla.
             </p>
+            <br/>
             <interactive-video>
                 <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:01"></interactive-element>
                 <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:04"></interactive-element>
