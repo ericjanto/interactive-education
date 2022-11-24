@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useInterval } from 'usehooks-ts'
 import { getBaseUrl, sessionCookieExists } from '../utils/lib'
 
+// TODO: this solution is not enough, need to log-in user?
+// Maybe it has todo with localhost sharing the same domain name.
 // TODO: This doesn't work on hosted version, for some reason. Something to investigate.
 // maybe check if appSession cookie is existent instead?
 // if existent --> assume logged in
@@ -36,19 +38,19 @@ export function UserStatus() {
 
     return (
         // TODO: switch(user)
-        <div className='topbar-userstatus'>
-            {user ?
-                <div>
-                    {`Answers are saved to `}
-                    <a target='_blank' href={baseURL} rel="noreferrer">RemWatch</a>
-                </div>
-                :
-                <div>
-                    <a target='_blank' href='/api/auth/login' rel="noreferrer">Login</a>
-                    {` to save answers to `}
-                    <a target='_blank' href={baseURL} rel="noreferrer">RemWatch</a>
-                </div>
-            }
-        </div>
+            <div className='topbar-userstatus'>
+                {user ?
+                    <div>
+                        {`Answers are saved to `}
+                        <a target='_blank' href={baseURL} rel="noreferrer">RemWatch</a>
+                    </div>
+                    :
+                    <div>
+                        <a target='_blank' href='/api/auth/login' rel="noreferrer">Login</a>
+                        {` to save answers to `}
+                        <a target='_blank' href={baseURL} rel="noreferrer">RemWatch</a>
+                    </div>
+                }
+            </div>
     )
 }

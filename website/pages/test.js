@@ -1,47 +1,25 @@
-import { useState } from 'react';
-import useSWR from 'swr';
-import { fetchMultiplePrompts } from '../utils/firebase';
-
-const fetcher = async (url) => {
-    const res = await fetch(url)
-    const data = await res.json()
-
-    if (res.status !== 200) {
-        throw new Error(data)
-    }
-
-    return data
-}
-
+import { useEffect } from "react"
 export default function Test() {
-    // const [data, setData] = useState()
-    const [fetched, setFetched] = useState(false)
-
-    const prompts = ['1','2']
-
-    const { data, error } = useSWR(
-        () => `/api/promptscontents/${prompts.join('/')}`,
-        fetcher
-    )
-
-    if (data) {
-        // setData(data)
-        console.log(data)
-    }
-    if (!data) return <div>fetching...</div>
-
-
-    // if (!fetched) {
-    //     fetchMultiplePrompts(['IkGe6av68j4pagoF5rBe']).then((result) => {
-    //         console.log(result)
-    //         setData(result)
-    //         setFetched(true)
-    //     })
-    // }
+    useEffect(() => {
+        if (window && document) {
+            const script = document.createElement('script')
+            const body = document.getElementsByTagName('body')[0]
+            script.src = 'https://interactive-education.vercel.app/interactive-video-component.js'
+            body.appendChild(script)
+        }
+    }, [])
     return (
         <>
+
             <h1>Test page</h1>
-            <div>{JSON.stringify(data)}</div>
+            <interactive-video>
+                <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:01"></interactive-element>
+                <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:04"></interactive-element>
+                <video controls src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
+                    width="620"></video>
+            </interactive-video>
+            <p>Some content</p>
+
         </>
     )
 }

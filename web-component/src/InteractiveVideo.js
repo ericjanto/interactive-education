@@ -83,8 +83,8 @@ export class InteractiveVideo extends HTMLElement {
 
         iframe.setAttribute('loading', 'eager')
         iframe.setAttribute(
-            'sandbox',
-            'allow-scripts allow-same-origin allow-popups allow-modals allow-forms'
+            "sandbox",
+            "allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-modals",
         )
         shadowRoot.appendChild(iframe)
 
