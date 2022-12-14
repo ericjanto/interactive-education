@@ -47,7 +47,7 @@ export function ContextDisplay({ promptID }) {
             <Dialog.Root>
                 <Dialog.Trigger asChild>
                     <div className='topbar-info information' style={{ cursor: 'pointer' }}>
-                        {'<- Jump back to explanation'}
+                        {'← Jump back to explanation'}
                     </div>
                 </Dialog.Trigger>
                 <Dialog.Portal>
