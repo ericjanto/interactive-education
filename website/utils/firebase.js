@@ -7,7 +7,10 @@
 // ========================================================================
 
 import { initializeApp } from 'firebase/app';
-import { doc, getDoc, getFirestore, collection, query, where, getDocs, Timestamp, addDoc, documentId } from "firebase/firestore";
+import {
+    doc, getDoc, getFirestore, collection, query,
+    where, getDocs, Timestamp, addDoc, documentId
+} from "firebase/firestore";
 
 
 const firebaseConfig = {
@@ -58,7 +61,9 @@ export async function fetchUserPromptsReviews(userID) {
 }
 
 export async function fetchUserSpecificPromptReviews(userID, promptID) {
-    const q = query(reviewsCollectionRef, where("user", "==", userID), where('promptID', '==', promptID))
+    const q = query(reviewsCollectionRef,
+        where("user", "==", userID),
+        where('promptID', '==', promptID))
     const querySnapshot = await getDocs(q);
     const docData = []
     querySnapshot.forEach((doc) => {
@@ -80,7 +85,10 @@ export async function createUserPromptReview(userID, promptID, remembered, nextD
 }
 
 export async function fetchSameContext(userID, promptID, contextLink) {
-    const q = query(contextCollectionRef, where('user', '==', userID), where('promptID', '==', promptID), where('contextLink', '==', contextLink))
+    const q = query(contextCollectionRef,
+        where('user', '==', userID),
+        where('promptID', '==', promptID),
+        where('contextLink', '==', contextLink))
     const querySnapshot = await getDocs(q);
     const docData = []
     querySnapshot.forEach((doc) => {
@@ -102,7 +110,10 @@ export async function createPromptContext(userID, promptID, contextLink, linkNam
 }
 
 export async function fetchUserSpecificPromptContexts(userID, promptID) {
-    const q = query(contextCollectionRef, where('user', '==', userID), where('promptID', '==', promptID))
+    const q = query(contextCollectionRef,
+        where('user', '==', userID),
+        where('promptID', '==', promptID))
+
     const querySnapshot = await getDocs(q);
     const docData = []
     querySnapshot.forEach((doc) => {
