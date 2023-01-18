@@ -1,6 +1,11 @@
 import { addDays, daysBetweenDates } from "./lib"
 
 export function leitnerSchedule(result) {
+    /**
+     * @param result is a sorted (by creation datetime) array of promptReview instances.
+     *  Data fields of a promptReview instance include:
+     *  - calculatedNextDue: next due date for the prompt
+     */
     if (result.length == 0) {
         return addDays(new Date(), 1)
     } else if (result.length == 1) {

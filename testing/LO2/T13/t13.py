@@ -3,7 +3,8 @@ import random
 import string
 import sys
 
-USAGE = 'Usage: python t13.py [number of instances]'
+USAGE = "Usage: python t13.py [number of instances]"
+
 
 def synthesise_data(N):
     data = []
