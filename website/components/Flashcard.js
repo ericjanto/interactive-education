@@ -32,7 +32,10 @@ export function Flashcard({ front, back, showQuestion, setShowQuestion }) {
             </div>
             {
                 showQuestion ?
-                    <button id={1} className='prompt-button z-priority' onClick={() => { setShowQuestion(false); }}>
+                    <button id={1} className='prompt-button z-priority' onClick={() => {
+                        setShowQuestion(false)
+                        console.log('Show answer button clicked')
+                        }}>
                         <div className='button-info'>
                             <div className='button-text'>Show answer</div>
                             <Image className='button-icon' src="/eye.svg" alt="Show answer icon" width={24} height={24} />
