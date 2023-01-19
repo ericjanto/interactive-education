@@ -1,4 +1,4 @@
-import { addDays, daysBetweenDates } from "./lib"
+import { addDays, daysBetweenDates } from "./lib.js"
 
 export function leitnerSchedule(result) {
     /**
@@ -11,8 +11,15 @@ export function leitnerSchedule(result) {
     } else if (result.length == 1) {
         return addDays(new Date(), 2)
     } else {
-        const mostRecentDueDate = result[0].calculatedNextDue.toDate()
-        const previousDueDate = result[1].calculatedNextDue.toDate()
+        var mostRecentDueDate
+        var previousDueDate
+        try {
+            mostRecentDueDate = result[0].calculatedNextDue.toDate()
+            previousDueDate = result[1].calculatedNextDue.toDate()
+        } catch (e) {
+            mostRecentDueDate = result[0].calculatedNextDue
+            previousDueDate = result[1].calculatedNextDue
+        }
         var add = daysBetweenDates(previousDueDate, mostRecentDueDate) * 2
 
         // This is the case if during deck review, not remembered and most recent due data = previous due date.

@@ -1,0 +1,11 @@
+{
+  "type": "module",
+  "scripts": {
+    "e2e-test": "yarn run cypress open",
+    "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
+  },
+  "devDependencies": {
+    "cypress": "^12.3.0",
+    "jest": "^29.3.1"
+  }
+}
