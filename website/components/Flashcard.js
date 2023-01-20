@@ -35,7 +35,9 @@ export function Flashcard({ front, back, showQuestion, setShowQuestion }) {
                     <button id={1} className='prompt-button z-priority' onClick={() => {
                         setShowQuestion(false)
                         console.log('Show answer button clicked')
-                        }}>
+                        }}
+                        tabIndex={0}
+                        >
                         <div className='button-info'>
                             <div className='button-text'>Show answer</div>
                             <Image className='button-icon' src="/eye.svg" alt="Show answer icon" width={24} height={24} />

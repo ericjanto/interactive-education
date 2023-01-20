@@ -41,7 +41,9 @@ export function Feedback({ promptID, onFeedback }) {
                 dbPayload.remembered = false
                 postResponse(dbPayload)
                 onFeedback(false)
-            }}>
+            }}
+            tabIndex={0}
+            >
                 <div className='button-info'>
                     <div className='button-text'>Forgotten</div>
                     <Image className='button-icon' src="/x.svg" alt="Show answer icon" width={24} height={24} />
@@ -51,7 +53,9 @@ export function Feedback({ promptID, onFeedback }) {
                 dbPayload.remembered = true
                 postResponse(dbPayload)
                 onFeedback(true)
-            }}>
+            }}
+            tabIndex={1}
+            >
                 <div className='button-info'>
                     <div className='button-text'>Remembered</div>
                     <Image className='button-icon' src="/check.svg" alt="Show answer icon" width={24} height={24} />
