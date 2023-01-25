@@ -22,7 +22,8 @@ export function leitnerSchedule(result) {
         }
         var add = daysBetweenDates(previousDueDate, mostRecentDueDate) * 2
 
-        // This is the case if during deck review, not remembered and most recent due data = previous due date.
+        // This is the case if during deck review, not remembered and
+        // most recent due data = previous due date.
         if (add == 0) {
             add = 1
         }
