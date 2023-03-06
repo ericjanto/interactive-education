@@ -37,16 +37,16 @@ export default function Template() {
                 labore nulla ullamco incididunt nulla.
             </p>
             <br/>
-            <interactive-video>
+            {/* <interactive-video>
                 <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:01"></interactive-element>
                 <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:04"></interactive-element>
                 <video controls src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
                     width="1000">
                 </video>
-            </interactive-video>
+            </interactive-video> */}
             <interactive-video>
-                <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:01"></interactive-element>
-                <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:04"></interactive-element>
+                <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:37"></interactive-element>
+                <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:38"></interactive-element>
                 <video controls src="/lecture_trimmed.mp4"
                     width="1000">
                 </video>
