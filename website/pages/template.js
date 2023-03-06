@@ -13,10 +13,10 @@ export default function Template() {
     return (
         <>
             <Head>
-                <title>Website Template for Interactive Video</title>
-                <meta property="og:site_name" content="Website Template for Interactive Video" />
+                <title>Convolutions and Image Processing</title>
+                <meta property="og:site_name" content="Convolutions and Image Processing" />
             </Head>
-            <h1>Website Template for Interactive Video</h1>
+            <h1>Website Convolutions and Image Processing</h1>
             <br/>
             <p>
                 This is a template which shows how to make an interactive video...
