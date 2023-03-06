@@ -44,7 +44,14 @@ export default function Template() {
                     width="1000">
                 </video>
             </interactive-video>
-            <p style={{'marginTop': '-50px'}}>
+            <interactive-video>
+                <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:01"></interactive-element>
+                <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:04"></interactive-element>
+                <video controls src="/lecture_trimmed.mp4"
+                    width="1000">
+                </video>
+            </interactive-video>
+            <p style={{'marginTop': '15px'}}>
                 Here could be a summary about the content of the video. Anim ipsum ullamco et ipsum
                 proident cillum irure dolor veniam velit.
                 Cupidatat deserunt incididunt est proident nostrud fugiat aliquip culpa duis commodo.
