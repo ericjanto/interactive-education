@@ -45,7 +45,6 @@ export default function Template() {
                 </video>
             </interactive-video> */}
             <interactive-video>
-                <interactive-element type="flashcard" id="A6Me6aKAczt74OFNAHX0" timestamp="00:00:01"></interactive-element>
                 <interactive-element type="flashcard" id="cGbkE2GhernWmifSF1x9" timestamp="00:00:27"></interactive-element>
                 <interactive-element type="flashcard" id="IkGe6av68j4pagoF5rBe" timestamp="00:01:38"></interactive-element>
                 <video controls src="/lecture_trimmed.mp4"
