@@ -19,13 +19,13 @@ export default function Template() {
             <h1>Website Convolutions and Image Processing</h1>
             <br/>
             <p>
-            In this engaging lecture from the MIT course "18.S191 Introduction to Deep Learning," Grant Sanderson explores the topic of convolutions in image processing. Through clear explanations and intuitive examples, he shows how convolutions are used to detect features in images, and how they can be applied in a variety of computer vision tasks. One stand-out quote from the lecture is:
+            In this engaging lecture from the MIT course &quot;18.S191 Introduction to Deep Learning&quot; Grant Sanderson explores the topic of convolutions in image processing. Through clear explanations and intuitive examples, he shows how convolutions are used to detect features in images, and how they can be applied in a variety of computer vision tasks. One stand-out quote from the lecture is:
             </p>
             <br/>
             <blockquote>&quot;A convolutional neural network is like a machine that takes in an image, and then it transforms that image through a series of operations in a way that highlights the features that are relevant for a particular task.&quot; – Sanderson</blockquote>
             <br/>
             <p>
-            Sanderson's passion for teaching and his ability to break down complex topics into digestible pieces make this video an excellent resource for anyone looking to learn more about deep learning and image processing.
+            Sanderson&apos;s passion for teaching and his ability to break down complex topics into digestible pieces make this video an excellent resource for anyone looking to learn more about deep learning and image processing.
             </p>
             <br/>
             {/* <interactive-video>
