@@ -34,6 +34,10 @@ export default function Review({ user }) {
     return (
         <>
             <h1>Review page</h1>
+            <p>
+                This is the review page where you can review flashcards that you have previously encountered in
+                lectures. Our spacing algorithm calculates when it's the best time for you to review a specific flashcard.
+            </p>
             {promptsToReview ? <Deck promptsToReview={promptsToReview}></Deck> : "Checking prompts to review..."}
         </>
     )

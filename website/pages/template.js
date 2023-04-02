@@ -16,7 +16,7 @@ export default function Template() {
                 <title>Convolutions and Image Processing</title>
                 <meta property="og:site_name" content="Convolutions and Image Processing" />
             </Head>
-            <h1>Website Convolutions and Image Processing</h1>
+            <h1>Convolutions and Image Processing</h1>
             <br/>
             <p>
             In this engaging lecture from the MIT course &quot;18.S191 Introduction to Deep Learning&quot; Grant Sanderson explores the topic of convolutions in image processing. Through clear explanations and intuitive examples, he shows how convolutions are used to detect features in images, and how they can be applied in a variety of computer vision tasks. One stand-out quote from the lecture is:
